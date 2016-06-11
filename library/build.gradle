@@ -1,0 +1,50 @@
+apply plugin: 'com.android.library'
+
+android {
+//    compileSdkVersion rootProject.ext.compileSdkVersion
+//    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion 10
+        targetSdkVersion 23
+        versionCode 34
+        versionName '0.3.4'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+    productFlavors {
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+apply from: 'gradle-mvn-push.gradle'
+apply from: 'gradle-jcenter-push.gradle'
+
+dependencies {
+    compile "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
+
+    // used because it comes with a ScrimInsetsRelativeLayout we need here
+    // contains util classes to support various android versions, and clean up code
+    // comes with the awesome "Holder"-Pattern
+    // https://github.com/mikepenz/Materialize
+    compile 'com.mikepenz:materialize:0.8.8@aar'
+}
+
+publish {
+    userOrg = project.POM_DEVELOPER_ID
+    groupId = project.PUBLISH_GROUP_ID
+    artifactId = project.POM_ARTIFACT_ID
+    version = project.VERSION_NAME
+    uploadName = project.POM_ARTIFACT_ID
+    description = project.POM_DESCRIPTION
+    website = project.POM_URL
+    autoPublish = true
+    dryRun = false
+    licences=[project.POM_LICENCE_NAME]
+}
