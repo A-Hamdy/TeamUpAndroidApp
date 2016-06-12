@@ -69,9 +69,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (validate()) {
-//                    new HttpAsyncTask().execute(Utilites.URL_Login);
+                    new HttpAsyncTask().execute(Utilites.URL_Login);
 //                    new HttpAsyncTask().execute(Utilites.URL_CreateTeam);
-                    new HttpAsyncTask().execute(Utilites.URL_GetSuggestedUsers);
+//                    new HttpAsyncTask().execute(Utilites.URL_GetSuggestedUsers);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong Credentials !!", Toast.LENGTH_SHORT).show();
@@ -91,7 +91,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
 
     public boolean validate() {
         boolean valid = true;
@@ -156,14 +155,14 @@ public class LoginActivity extends AppCompatActivity {
 //                jsonObject.put("ownerId", "69");
 //                jsonObject.put("skillId","1" );
 
-
-                Team team = new Team();
-                team.setOwnerId(69);
-                team.setSkillId(1);
+//
+//                Team team = new Team();
+//                team.setOwnerId(69);
+//                team.setSkillId(1);
 
                 /*Using Gson Library JSON*/
                 Gson jsonBuilder = new Gson();
-                JSONObject jsonObject = new JSONObject(jsonBuilder.toJson(team));
+                JSONObject jsonObject = new JSONObject(jsonBuilder.toJson(myUser));
 
                 result = WebServiceHandler.handler(urls[0], jsonObject);
 
@@ -221,11 +220,7 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 Toast.makeText(getApplicationContext(),result + " ",Toast.LENGTH_LONG).show();
-
-                Log.i("HamdyResult",result);
                 JSONObject resultObject = new JSONObject(result);
-
-//                MyToast.toast(getApplicationContext(), result);
 
                 Integer id = resultObject.getInt("id");
                 MyToast.toast(getApplicationContext(), id + " : Your ID From Login :D");
@@ -445,3 +440,7 @@ public class LoginActivity extends AppCompatActivity {
 //        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
 //    }
 }
+
+
+
+

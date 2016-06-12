@@ -11,7 +11,7 @@ public class Utilites {
 //    static String IP = "10.144.3.172";
 //    static String IP = "192.168.43.21";
 //    static String IP = "192.168.72.1";
-    static String IP = "10.0.0.187";
+    static String IP = "10.140.200.63";
 //    static String IP = "10.0.1.14";
 
     //Skill 1

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.hmkcode.com.myapplication123.CreateTeam.CreateTeam;
 import android.hmkcode.com.myapplication123.Credential.LoginActivity;
 import android.hmkcode.com.myapplication123.MyTeams.MyTeams;
 import android.hmkcode.com.myapplication123.R;
@@ -131,7 +132,12 @@ public class MainActivity extends AppCompatActivity {
 
                         } else if (drawerItem.getIdentifier() == 2) {
 
-
+                            fragment = new CreateTeam();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            toolbar.setTitle("Create Team");
+                            transaction.replace(R.id.mainFragment, fragment);
+                            transaction.commit();
+                            result.getDrawerLayout().closeDrawer(GravityCompat.START);
 
 
                         } else if (drawerItem.getIdentifier() == 7) {

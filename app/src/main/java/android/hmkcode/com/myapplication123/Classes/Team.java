@@ -9,7 +9,7 @@ public class Team {
     private String title;
     private String bio;
     private String description;
-    private String teamImage;
+    private String image;
     private int durtion;
     private int ownerId;
     private int skillId;
@@ -54,12 +54,12 @@ public class Team {
         this.description = description;
     }
 
-    public String getTeamImage() {
-        return teamImage;
+    public String getImage() {
+        return image;
     }
 
-    public void setTeamImage(String teamImage) {
-        this.teamImage = teamImage;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getDurtion() {
