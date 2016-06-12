@@ -1,4 +1,4 @@
-package android.hmkcode.com.myapplication123.TeamGrid;
+package android.hmkcode.com.myapplication123.MyTeams.TeamGrid;
 
 import android.content.Context;
 import android.hmkcode.com.myapplication123.R;
@@ -51,18 +51,26 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(final MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         TeamGrid album = teamsList.get(position);
         holder.title.setText(album.getName());
         holder.count.setText(album.getNumOfMembers() + " Team Member");
         // loading album cover using Glide library
         Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
-        holder.thumbnail.setOnClickListener(new MyImageView());
+
+        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "thumb " + holder.title.getText(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         holder.overflow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showPopupMenu(holder.overflow);
+                //Toast.makeText(mContext, "current " + holder.title.getText(), Toast.LENGTH_SHORT).show();
             }
         });
     }

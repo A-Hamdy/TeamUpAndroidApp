@@ -1,4 +1,4 @@
-package android.hmkcode.com.myapplication123.TeamGrid;
+package android.hmkcode.com.myapplication123.MyTeams.TeamGrid;
 
 /**
  * Created by Lincoln on 18/05/16.

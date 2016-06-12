@@ -17,8 +17,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.hmkcode.com.myapplication123.TeamGrid.TeamGrid;
-import android.hmkcode.com.myapplication123.TeamGrid.TeamsAdapter;
+import android.hmkcode.com.myapplication123.MyTeams.TeamGrid.TeamGrid;
+import android.hmkcode.com.myapplication123.MyTeams.TeamGrid.TeamsAdapter;
 
 
 public class MyTeams extends Fragment {

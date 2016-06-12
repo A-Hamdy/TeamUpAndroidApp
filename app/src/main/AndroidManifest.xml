@@ -24,7 +24,6 @@
         <activity android:name=".Credential.Register" />
         <activity android:name=".MainActivity.MainActivity" />
         <activity android:name=".Profile.MyProfile"></activity>
-        <activity android:name=".UsersList.RecyclerViewActivity"></activity>
     </application>
 
 </manifest>

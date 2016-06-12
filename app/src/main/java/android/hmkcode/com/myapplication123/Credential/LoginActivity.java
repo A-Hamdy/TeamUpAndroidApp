@@ -4,19 +4,16 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hmkcode.com.myapplication123.Classes.Team;
 import android.hmkcode.com.myapplication123.MainActivity.MainActivity;
 import android.hmkcode.com.myapplication123.ProjectUtitlites.MyToast;
 import android.hmkcode.com.myapplication123.ProjectUtitlites.Utilites;
 import android.hmkcode.com.myapplication123.R;
-import android.hmkcode.com.myapplication123.UsersList.RecyclerViewActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
                 /* TEST Condition*/
                 if (Email.getText().toString().equals("a@a.com")) {
                     Intent toIntent = new Intent(getApplicationContext(), MainActivity.class);
-//                    Intent toIntent = new Intent(getApplicationContext(), RecyclerViewActivity.class);
                     startActivity(toIntent);
                     finish();
                 }
@@ -251,15 +247,12 @@ public class LoginActivity extends AppCompatActivity {
 //                    Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
 //
 //                    myUser.imageSaveToInternal(getApplicationContext(),decodedByte,"userImage");
-//
+
                     // Read Stuff
                     Intent toIntent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(toIntent);
                     finish();
-//                    Intent toIntent = new Intent(getApplicationContext(), RecyclerViewActivity.class);
-//                    startActivity(toIntent);
-//                    finish();
-
+                    
                 }
 
 

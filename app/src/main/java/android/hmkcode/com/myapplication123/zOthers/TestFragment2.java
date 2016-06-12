@@ -1,5 +1,6 @@
-package android.hmkcode.com.myapplication123;
+package android.hmkcode.com.myapplication123.zOthers;
 
+import android.hmkcode.com.myapplication123.R;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

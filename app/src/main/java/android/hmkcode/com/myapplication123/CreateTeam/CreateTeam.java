@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,7 +44,7 @@ public class CreateTeam extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         team = new Team();
         team.setTitle("teamTitle");
         team.setBio("bio");
@@ -120,6 +122,14 @@ public class CreateTeam extends Fragment {
             MyToast.toast(getActivity().getApplicationContext(), result + " ");
 
             progressDialog.cancel();
+
+            /*Go to Users Fragment*/
+            Fragment fragment = new TeamUsersList();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.createTeam, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
 
         }
     }

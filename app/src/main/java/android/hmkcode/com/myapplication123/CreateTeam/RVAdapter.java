@@ -1,4 +1,4 @@
-package android.hmkcode.com.myapplication123.UsersList;
+package android.hmkcode.com.myapplication123.CreateTeam;
 
 import android.hmkcode.com.myapplication123.Classes.User;
 import android.hmkcode.com.myapplication123.ProjectUtitlites.MyToast;
@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,7 +37,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
             invite.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    MyToast.toast(v.getContext(),"clicked");
+                    MyToast.toast(v.getContext(),"clicked"+ getAdapterPosition());
                 }
             });
 //            personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
@@ -73,7 +72,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
             @Override
             public void onClick(View v) {
                 MyToast.toast(v.getContext(),"View clicked" + ":P");
-
             }
         });
 //        personViewHolder.personPhoto.setImageResource(persons.get(i).photoId);
