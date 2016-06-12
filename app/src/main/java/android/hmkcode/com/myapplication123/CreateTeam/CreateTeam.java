@@ -2,13 +2,9 @@ package android.hmkcode.com.myapplication123.CreateTeam;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.hmkcode.com.myapplication123.Classes.Team;
-import android.hmkcode.com.myapplication123.MainActivity.MainActivity;
-import android.hmkcode.com.myapplication123.ProjectUtitlites.MyToast;
-import android.hmkcode.com.myapplication123.ProjectUtitlites.Utilites;
+import android.hmkcode.com.myapplication123.Utitlites.MyToast;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
 import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -16,20 +12,16 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.hmkcode.com.myapplication123.R;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.net.HttpURLConnection;
 
 
 public class CreateTeam extends Fragment {
@@ -125,6 +117,11 @@ public class CreateTeam extends Fragment {
 
             /*Go to Users Fragment*/
             Fragment fragment = new TeamUsersList();
+            Bundle dataId = new Bundle();
+            dataId.putInt("ownerId",team.getOwnerId());
+            dataId.putInt("skillId",team.getSkillId());
+            fragment.setArguments(dataId);
+
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.createTeam, fragment);

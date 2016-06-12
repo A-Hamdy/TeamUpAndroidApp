@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import android.hmkcode.com.myapplication123.ProjectUtitlites.Utilites;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
 
 /**
  * Created by Ahmed Hamdy on 5/30/2016.

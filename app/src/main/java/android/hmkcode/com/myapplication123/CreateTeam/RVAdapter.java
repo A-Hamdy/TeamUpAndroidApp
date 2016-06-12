@@ -1,7 +1,7 @@
 package android.hmkcode.com.myapplication123.CreateTeam;
 
 import android.hmkcode.com.myapplication123.Classes.User;
-import android.hmkcode.com.myapplication123.ProjectUtitlites.MyToast;
+import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.R;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -65,13 +65,13 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
+    public void onBindViewHolder(PersonViewHolder personViewHolder, final int i) {
         personViewHolder.personName.setText(users.get(i).getName());
         personViewHolder.personAge.setText(users.get(i).getEmail());
         personViewHolder.cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyToast.toast(v.getContext(),"View clicked" + ":P");
+                MyToast.toast(v.getContext(),"View clicked" + ":P" + users.get(i).getName());
             }
         });
 //        personViewHolder.personPhoto.setImageResource(persons.get(i).photoId);

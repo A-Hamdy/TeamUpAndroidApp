@@ -1,4 +1,4 @@
-package android.hmkcode.com.myapplication123.ProjectUtitlites;
+package android.hmkcode.com.myapplication123.Utitlites;
 
 import android.content.Context;
 import android.widget.Toast;

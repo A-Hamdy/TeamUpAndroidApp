@@ -2,7 +2,7 @@ package android.hmkcode.com.myapplication123.Profile;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hmkcode.com.myapplication123.ProjectUtitlites.MyToast;
+import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.R;
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hmkcode.com.myapplication123.MainActivity.MainActivity;
-import android.hmkcode.com.myapplication123.ProjectUtitlites.MyToast;
-import android.hmkcode.com.myapplication123.ProjectUtitlites.Utilites;
+import android.hmkcode.com.myapplication123.Utitlites.MyToast;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
 import android.hmkcode.com.myapplication123.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -252,7 +252,7 @@ public class LoginActivity extends AppCompatActivity {
                     Intent toIntent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(toIntent);
                     finish();
-                    
+
                 }
 
 
