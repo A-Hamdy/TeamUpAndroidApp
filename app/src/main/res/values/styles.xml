@@ -21,4 +21,11 @@
         <item name="colorPrimaryDark">#4255bd</item>
         <item name="colorAccent">#C5CAE9</item>
     </style>
+
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlActivated">#FFB320</item>
+        <item name="colorControlNormal">#FFB300</item>
+
+    </style>
 </resources>

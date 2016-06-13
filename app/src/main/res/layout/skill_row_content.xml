@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    android:clickable="true"
+    android:background="?android:attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/category"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Category"/>
+
+    <TextView
+        android:id="@+id/skill"
+        android:paddingTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skill"
+        android:layout_alignBottom="@+id/rateDescription"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/rateDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Good"
+        android:textSize="11dp"
+        android:layout_below="@+id/skillStars"
+        android:layout_alignRight="@+id/skillStars"
+        android:layout_alignEnd="@+id/skillStars"
+        android:layout_marginRight="40dp"
+        android:layout_marginEnd="40dp" />
+
+    <RatingBar
+        android:theme="@style/RatingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/skillStars"
+        android:numStars="3"
+        android:rating="2"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        style="?android:attr/ratingBarStyleIndicator"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/category"
+        android:layout_alignEnd="@+id/category" />
+
+</RelativeLayout>
