@@ -116,8 +116,8 @@ public class CreateTeam extends Fragment {
             progressDialog.cancel();
 
             /*Go to Users Fragment*/
-//            Fragment fragment = new TeamUsersList();
-            Fragment fragment = new AddTeamSkills();
+            Fragment fragment = new TeamUsersList();
+//            Fragment fragment = new AddTeamSkills();
 
             Bundle dataId = new Bundle();
             dataId.putInt("ownerId",team.getOwnerId());

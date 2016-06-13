@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,13 +25,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 
 import android.hmkcode.com.myapplication123.Classes.User;
 import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
@@ -38,6 +46,9 @@ public class LoginActivity extends AppCompatActivity {
     Button Login;
 
     EditText Email;
+
+    GoogleCloudMessaging gcm;
+    String regId;
 
     EditText pssword;
     ImageView img;
@@ -69,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                     new HttpAsyncTask().execute(Utilites.URL_Login);
 //                    new HttpAsyncTask().execute(Utilites.URL_CreateTeam);
 //                    new HttpAsyncTask().execute(Utilites.URL_GetSuggestedUsers);
+//                    new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong Credentials !!", Toast.LENGTH_SHORT).show();
@@ -241,12 +253,13 @@ public class LoginActivity extends AppCompatActivity {
 //// Read Stuff
                     myUser = myUser.userGetData(getApplicationContext());
 
-
 //                    String data = myUser.getProfilePictureBase64();
 //                    byte[] myimg = Base64.decode(data,Base64.DEFAULT);
 //                    Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
 //
 //                    myUser.imageSaveToInternal(getApplicationContext(),decodedByte,"userImage");
+
+//                    new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
 
                     // Read Stuff
                     Intent toIntent = new Intent(getApplicationContext(), MainActivity.class);
@@ -259,12 +272,88 @@ public class LoginActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+           // sendToken();
+            progressDialog.cancel();
+
+        }
+    }
+
+
+
+    /**/
+
+    private class HttpAsyncTask2 extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Send Users ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = "hh";
+            try {
+
+                /*Using Gson Library JSON*/
+                JSONArray jsonArray = new JSONArray();
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",69);
+                jsonArray.put(jsonObject);
+
+                jsonObject = new JSONObject();
+                jsonObject.put("id",68);
+
+                jsonArray.put(jsonObject);
+
+
+                JSONObject userList = new JSONObject();
+                userList.put("teamId",282);
+                userList.put("usersId",jsonArray);
+
+
+                result = WebServiceHandler.handler(urls[0], userList);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+            //MyToast.toast(getActivity().getApplicationContext(), result + " ");
+
+
+
+//            for (User user : myUsers) {
+//                users2.add(new User(user.getName(), user.getEmail()));
+////                users2.add(new User("Ahmed Hamdy 2", "ahmedhamdy2222@gmail.com"));
+//
+//                MyToast.toast(getActivity().getApplicationContext(), user.getEmail() + " ");
+//            }
+
 
             progressDialog.cancel();
 
         }
     }
 
+
+
+    /**/
 
 
 
@@ -432,6 +521,105 @@ public class LoginActivity extends AppCompatActivity {
 //        byte[] decodedBytes = Base64.decode(input, 0);
 //        return BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.length);
 //    }
+
+
+
+    public void sendToken(){
+        regId = registerGCM();
+    }
+
+    public String registerGCM() {
+        String regId;
+        gcm = GoogleCloudMessaging.getInstance(this);
+        registerInBackground();
+
+        return null;
+    }
+
+    private void registerInBackground() {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                    }
+                    regId = gcm.register(Utilites.GOOGLE_PROJECT_ID);
+                    msg = "Device registered, registration ID=" + regId;
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                    Log.d("RegisterActivity", "Error: " + msg);
+                }
+                Log.d("RegisterActivity", "AsyncTask completed: " + msg);
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                Toast.makeText(getApplicationContext(),
+                        "Registered with GCM Server." + msg, Toast.LENGTH_LONG)
+                        .show();
+                SendToServer();
+
+            }
+        }.execute(null, null, null);
+    }
+
+
+    public void SendToServer(){
+
+        //new HttpAsyncTask2().execute(Utilites.URL_Notification_URL);
+    }
+
+
+
+    private class HttpAsyncTask3 extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(LoginActivity.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Send To Server ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = null;
+            try {
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("userId", myUser.getId());
+                jsonObject.put("token",  regId);
+                result = WebServiceHandler.handler(urls[0], jsonObject);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+            MyToast.toast(getApplicationContext(),"server data :" + result);
+            progressDialog.cancel();
+
+
+
+        }
+    }
 }
 
 

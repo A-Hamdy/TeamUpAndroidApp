@@ -1,8 +1,11 @@
 package android.hmkcode.com.myapplication123.CreateTeam;
 
+import android.app.ProgressDialog;
 import android.hmkcode.com.myapplication123.Classes.User;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.R;
+import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
+import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONException;
+
 import java.util.List;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
 
-
+    List<User> users;
 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
 
@@ -38,15 +43,14 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
                 @Override
                 public void onClick(View v) {
                     MyToast.toast(v.getContext(),"clicked"+ getAdapterPosition());
+
                 }
             });
 //            personPhoto = (ImageView)itemView.findViewById(R.id.person_photo);
         }
-
-
     }
 
-    List<User> users;
+
 
     RVAdapter(List<User> users){
         this.users = users;
@@ -81,4 +85,6 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
     public int getItemCount() {
         return users.size();
     }
+
+
 }

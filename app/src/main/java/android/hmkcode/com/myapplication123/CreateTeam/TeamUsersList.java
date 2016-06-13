@@ -22,6 +22,7 @@ import android.hmkcode.com.myapplication123.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -143,6 +144,8 @@ public class TeamUsersList extends Fragment {
 
             initializeData();
             initializeAdapter();
+
+//            new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
             progressDialog.cancel();
 
         }
@@ -152,13 +155,92 @@ public class TeamUsersList extends Fragment {
     private void initializeData() {
         users = new ArrayList<>();
         users = myUsers;
-
     }
 
     private void initializeAdapter() {
         RVAdapter adapter = new RVAdapter(users);
         rv.setAdapter(adapter);
     }
+
+
+
+    private class HttpAsyncTask2 extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Send Users ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = "hh";
+            try {
+
+                /*Using Gson Library JSON*/
+                JSONArray jsonArray = new JSONArray();
+
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1.put("id",69);
+
+                JSONObject jsonObject2 = new JSONObject();
+                jsonObject1.put("id",68);
+
+                jsonArray.put(jsonObject1);
+                jsonArray.put(jsonObject2);
+
+
+                JSONObject userList = new JSONObject();
+                userList.put("teamId",282);
+                userList.put("usersId",jsonArray);
+
+                MyToast.toast(getActivity(),userList.toString());
+
+
+
+                result = WebServiceHandler.handler(urls[0], userList);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+            //MyToast.toast(getActivity().getApplicationContext(), result + " ");
+
+            Gson jsonBuilder = new Gson();
+            Type myList = new TypeToken<ArrayList<User>>(){}.getType();
+            myUsers = new ArrayList<>();
+            myUsers = jsonBuilder.fromJson(result,myList);
+
+//            for (User user : myUsers) {
+//                users2.add(new User(user.getName(), user.getEmail()));
+////                users2.add(new User("Ahmed Hamdy 2", "ahmedhamdy2222@gmail.com"));
+//
+//                MyToast.toast(getActivity().getApplicationContext(), user.getEmail() + " ");
+//            }
+
+
+            initializeData();
+            initializeAdapter();
+            progressDialog.cancel();
+
+        }
+    }
+
 
 
 }
