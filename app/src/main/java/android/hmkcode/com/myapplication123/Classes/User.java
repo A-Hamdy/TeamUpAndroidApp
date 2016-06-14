@@ -21,16 +21,7 @@ import android.hmkcode.com.myapplication123.Utitlites.Utilites;
 public class User {
 
 
-//    private static User userSingleton = null;
-//
-//    private User(){ }
-//
-//    public static User getInstance(){
-//        if(userSingleton == null)
-//            userSingleton = new User();
-//
-//        return userSingleton;
-//    }
+
 
 
     private String id;

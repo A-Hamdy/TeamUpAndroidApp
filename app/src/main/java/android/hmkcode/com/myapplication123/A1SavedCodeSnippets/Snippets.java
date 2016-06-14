@@ -16,6 +16,7 @@ public class Snippets {
     #5- Json Parse using Gson fromJson.
     #6- Save Image To Internal Storage [Not Recommended Gallery Better].
     #7- Get Image from Internal Storage.
+    #8- Singleton Design Pattern
 
      */
 
@@ -73,6 +74,25 @@ public class Snippets {
         jsonObject.put("skillId","1");
         jsonObject.put("image","ahmed");
     -----------------------------------------------------------------------------------------
+
+
+    [#8]
+    -----------------------------------------------------------------------------------------
+        private static User userSingleton = null;
+        private User(){ }
+        public static User getInstance(){
+            if(userSingleton == null)
+                userSingleton = new User();
+            return userSingleton;
+        }
+    -----------------------------------------------------------------------------------------
+
+
+
+
+
+
+
 
      */
 

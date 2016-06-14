@@ -9,6 +9,7 @@ import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.hmkcode.com.myapplication123.R;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.google.gson.Gson;
 
@@ -27,6 +30,9 @@ import org.json.JSONObject;
 public class CreateTeam extends Fragment {
 
     Team team = null;
+    EditText  name, description, bio, duration;
+    Button save;
+
 
     public CreateTeam() {
 
@@ -37,16 +43,7 @@ public class CreateTeam extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        team = new Team();
-        team.setTitle("teamTitle");
-        team.setBio("bio");
-        team.setDescription("descr");
-        team.setDurtion(15);
-        team.setImage("image");
-        team.setOwnerId(69);
-        team.setSkillId(1);
 
-        new HttpAsyncTask().execute(Utilites.URL_CreateTeam);
 
 
     }
@@ -58,6 +55,34 @@ public class CreateTeam extends Fragment {
     }
 
     public void onButtonPressed(Uri uri) {
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        name = (EditText) getView().findViewById(R.id.createTeamName);
+        description = (EditText) getView().findViewById(R.id.createTeamDescription);
+        bio = (EditText) getView().findViewById(R.id.createTeamBio);
+        duration = (EditText) getView().findViewById(R.id.createTeamDuration);
+        save = (Button) getView().findViewById(R.id.createTeamSaveButton);
+
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                team = new Team();
+                team.setTitle(name.getText().toString());
+                team.setBio(bio.getText().toString());
+                team.setDescription(description.getText().toString());
+                team.setDurtion(Integer.parseInt(duration.getText().toString()));
+                team.setImage("image2");
+                team.setOwnerId(69);
+                team.setSkillId(1);
+
+                new HttpAsyncTask().execute(Utilites.URL_CreateTeam);
+            }
+        });
 
     }
 

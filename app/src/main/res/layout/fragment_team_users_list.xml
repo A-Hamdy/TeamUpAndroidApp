@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     tools:context="android.hmkcode.com.myapplication123.CreateTeam.TeamUsersList"
     android:padding="10dp"
+    android:background="@color/md_white_1000"
     >
 
 
