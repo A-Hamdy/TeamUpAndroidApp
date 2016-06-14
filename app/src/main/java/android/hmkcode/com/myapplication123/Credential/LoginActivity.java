@@ -80,7 +80,6 @@ public class LoginActivity extends AppCompatActivity {
                     new HttpAsyncTask().execute(Utilites.URL_Login);
 //                    new HttpAsyncTask().execute(Utilites.URL_CreateTeam);
 //                    new HttpAsyncTask().execute(Utilites.URL_GetSuggestedUsers);
-//                    new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
 
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong Credentials !!", Toast.LENGTH_SHORT).show();
@@ -259,8 +258,6 @@ public class LoginActivity extends AppCompatActivity {
 //
 //                    myUser.imageSaveToInternal(getApplicationContext(),decodedByte,"userImage");
 
-//                    new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
-
                     // Read Stuff
                     Intent toIntent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(toIntent);
@@ -350,11 +347,6 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     }
-
-
-
-    /**/
-
 
 
 
@@ -523,7 +515,6 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 
 
-
     public void sendToken(){
         regId = registerGCM();
     }
@@ -573,7 +564,6 @@ public class LoginActivity extends AppCompatActivity {
 
         //new HttpAsyncTask2().execute(Utilites.URL_Notification_URL);
     }
-
 
 
     private class HttpAsyncTask3 extends AsyncTask<String, Void, String> {
