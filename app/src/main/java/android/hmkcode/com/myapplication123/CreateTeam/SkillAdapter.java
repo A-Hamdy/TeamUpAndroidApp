@@ -50,12 +50,16 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.MyViewHolder
         holder.ratingDescription.setText(skill.getRatingDescription());
         holder.skill.setText(skill.getSkill());
         String rating = (String) holder.ratingDescription.getText();
+
         if (rating.equalsIgnoreCase("poor"))
             holder.stars.setRating(1);
         else if (rating.equalsIgnoreCase("good"))
             holder.stars.setRating(2);
         else if (rating.equalsIgnoreCase("excellent"))
             holder.stars.setRating(3);
+
+
+
     }
 
     @Override

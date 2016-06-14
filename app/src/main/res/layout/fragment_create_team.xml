@@ -118,6 +118,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="SAVE"
+            android:textColor="#ffffff"
+            android:background="@color/colorPrimary"
             android:id="@+id/createTeamSaveButton"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"

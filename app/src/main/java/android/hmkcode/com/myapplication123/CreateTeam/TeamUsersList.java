@@ -13,7 +13,9 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -72,6 +74,8 @@ public class TeamUsersList extends Fragment {
 
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         rv.setLayoutManager(llm);
+
+
         rv.setHasFixedSize(true);
 
         new HttpAsyncTask().execute(Utilites.URL_GetSuggestedUsers);
@@ -96,10 +100,12 @@ public class TeamUsersList extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Getting Users ...");
-            progressDialog.show();
+//            progressDialog = new ProgressDialog(getActivity());
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Getting Users ...");
+//            progressDialog.show();
+            MyToast.toast(getContext(),"TEST TOAST");
+
         }
 
         @Override
@@ -146,7 +152,11 @@ public class TeamUsersList extends Fragment {
             initializeAdapter();
 
 //            new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
-            progressDialog.cancel();
+//            progressDialog.cancel();
+//            progressDialog.dismiss();
+
+            new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
+
 
         }
     }
@@ -170,10 +180,10 @@ public class TeamUsersList extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Send Users ...");
-            progressDialog.show();
+//            progressDialog = new ProgressDialog(getActivity());
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Send Users ...");
+//            progressDialog.show();
         }
 
         @Override
@@ -186,21 +196,20 @@ public class TeamUsersList extends Fragment {
                 /*Using Gson Library JSON*/
                 JSONArray jsonArray = new JSONArray();
 
-                JSONObject jsonObject1 = new JSONObject();
-                jsonObject1.put("id",69);
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",1);
+                jsonArray.put(jsonObject);
 
-                JSONObject jsonObject2 = new JSONObject();
-                jsonObject1.put("id",68);
-
-                jsonArray.put(jsonObject1);
-                jsonArray.put(jsonObject2);
+                jsonObject = new JSONObject();
+                jsonObject.put("id",2);
+                jsonArray.put(jsonObject);
 
 
                 JSONObject userList = new JSONObject();
-                userList.put("teamId",282);
+                userList.put("teamId",50);
                 userList.put("usersId",jsonArray);
 
-                MyToast.toast(getActivity(),userList.toString());
+//                MyToast.toast(getActivity(),userList.toString());
 
 
 
@@ -219,27 +228,33 @@ public class TeamUsersList extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            //MyToast.toast(getActivity().getApplicationContext(), result + " ");
+            MyToast.toast(getActivity().getApplicationContext(), result + " ");
 
-            Gson jsonBuilder = new Gson();
-            Type myList = new TypeToken<ArrayList<User>>(){}.getType();
-            myUsers = new ArrayList<>();
-            myUsers = jsonBuilder.fromJson(result,myList);
-
-//            for (User user : myUsers) {
-//                users2.add(new User(user.getName(), user.getEmail()));
-////                users2.add(new User("Ahmed Hamdy 2", "ahmedhamdy2222@gmail.com"));
+//            Gson jsonBuilder = new Gson();
+//            Type myList = new TypeToken<ArrayList<User>>(){}.getType();
+//            myUsers = new ArrayList<>();
+//            myUsers = jsonBuilder.fromJson(result,myList);
 //
-//                MyToast.toast(getActivity().getApplicationContext(), user.getEmail() + " ");
-//            }
-
-
-            initializeData();
-            initializeAdapter();
-            progressDialog.cancel();
-
+////            for (User user : myUsers) {
+////                users2.add(new User(user.getName(), user.getEmail()));
+//////                users2.add(new User("Ahmed Hamdy 2", "ahmedhamdy2222@gmail.com"));
+////
+////                MyToast.toast(getActivity().getApplicationContext(), user.getEmail() + " ");
+////            }
+//
+//
+//            initializeData();
+//            initializeAdapter();
+//            progressDialog.cancel();
+              MyToast.toast(getContext(),  "Done ");
         }
+
+
     }
+
+
+
+
 
 
 

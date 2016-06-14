@@ -147,26 +147,6 @@ public class LoginActivity extends AppCompatActivity {
             String imgEncode = encodeToBase64(bitmap, Bitmap.CompressFormat.PNG, 100);
             try {
 
-                /*HardCoded JSON*/ //Create Team
-//                JSONObject jsonObject = new JSONObject();
-//                jsonObject.put("title", "title2");
-//                jsonObject.put("bio","biooooooo" );
-//                jsonObject.put("description","description");
-//                jsonObject.put("durtion","5");
-//                jsonObject.put("ownerId","69");
-//                jsonObject.put("skillId","1");
-//                jsonObject.put("image","ahmed");
-
-
-//                JSONObject jsonObject = new JSONObject();
-//                jsonObject.put("ownerId", "69");
-//                jsonObject.put("skillId","1" );
-
-//
-//                Team team = new Team();
-//                team.setOwnerId(69);
-//                team.setSkillId(1);
-
                 /*Using Gson Library JSON*/
                 Gson jsonBuilder = new Gson();
                 JSONObject jsonObject = new JSONObject(jsonBuilder.toJson(myUser));
@@ -178,44 +158,6 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             return result;
-//            try {
-//                URL url = new URL("http://10.144.3.172:40663/TeamUP/rest/WebService/login");
-//                urlConnection = (HttpURLConnection) url.openConnection();
-//                urlConnection.setDoInput (true);
-//                urlConnection.setDoOutput (true);
-//                urlConnection.setUseCaches (false);
-//                urlConnection.setRequestProperty("Content-Type","application/json");
-////                urlConnection.setRequestProperty("Host", "android.schoolportal.gr");
-//
-//                JSONObject jsonParam = new JSONObject();
-//                jsonParam.put("email", "adel@yahoo.com");
-//                jsonParam.put("password", "123");
-//
-//                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-//
-//                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-//
-//                printout = new DataOutputStream(urlConnection.getOutputStream ());
-//                printout.write(Integer.parseInt(URLEncoder.encode(jsonParam.toString(),"UTF-8")));
-//                printout.flush ();
-//                printout.close ();
-//
-//                String line;
-//                while ((line = reader.readLine()) != null) {
-//                    result.append(line);
-//                }
-//
-//            }catch( Exception e) {
-//                e.printStackTrace();
-//            }
-//            finally {
-//                urlConnection.disconnect();
-//
-//            }
-//
-//
-//            return result.toString();
-//        }
 
         }
 
@@ -226,30 +168,17 @@ public class LoginActivity extends AppCompatActivity {
 
 
             try {
-                Toast.makeText(getApplicationContext(),result + " ",Toast.LENGTH_LONG).show();
+               // Toast.makeText(getApplicationContext(),result + " ",Toast.LENGTH_LONG).show();
                 JSONObject resultObject = new JSONObject(result);
-
                 Integer id = resultObject.getInt("id");
                 MyToast.toast(getApplicationContext(), id + " : Your ID From Login :D");
 
-//                MyToast.toast(getApplicationContext(), "bytes : " + resultObject.getString("profilePictureBase64"));
-                /*
-                 String data =  resultObject.getString("profilePictureBase64");
-                 byte[] myimg = data.getBytes();
-                 Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
-                 img.setImageBitmap(decodedByte);*/
                 if (id != null) {
-/*
-                    String data = resultObject.getString("profilePictureBase64");
-                    byte[] myimg = Base64.decode(data,Base64.DEFAULT);
-                    Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
-                    MyToast.toast(getApplicationContext(), "bytes : " + resultObject.getString("profilePictureBase64"));
-                    img.setImageBitmap(decodedByte);
-*/
+
 
                     myUser.userSaveData(getApplicationContext(),result);
-////
-//// Read Stuff
+
+// Read Stuff
                     myUser = myUser.userGetData(getApplicationContext());
 
 //                    String data = myUser.getProfilePictureBase64();
@@ -269,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-           // sendToken();
+            //sendToken();
             progressDialog.cancel();
 
         }
@@ -562,11 +491,11 @@ public class LoginActivity extends AppCompatActivity {
 
     public void SendToServer(){
 
-        //new HttpAsyncTask2().execute(Utilites.URL_Notification_URL);
+        new SendTokenToServer().execute(Utilites.URL_Notification_URL);
     }
 
 
-    private class HttpAsyncTask3 extends AsyncTask<String, Void, String> {
+    private class SendTokenToServer extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
         @Override
@@ -574,13 +503,12 @@ public class LoginActivity extends AppCompatActivity {
             super.onPreExecute();
             progressDialog = new ProgressDialog(LoginActivity.this);
             progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Send To Server ...");
+            progressDialog.setMessage("Send Token To Server ...");
             progressDialog.show();
         }
 
         @Override
         protected String doInBackground(String... urls) {
-
 
             String result = null;
             try {
@@ -598,17 +526,22 @@ public class LoginActivity extends AppCompatActivity {
 
         }
 
-
-        // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
 
             MyToast.toast(getApplicationContext(),"server data :" + result);
-            progressDialog.cancel();
-
+            progressDialog.dismiss();
 
 
         }
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
     }
 }
 

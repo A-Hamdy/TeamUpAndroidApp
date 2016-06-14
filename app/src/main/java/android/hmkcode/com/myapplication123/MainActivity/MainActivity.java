@@ -1,5 +1,6 @@
 package android.hmkcode.com.myapplication123.MainActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,10 @@ import android.hmkcode.com.myapplication123.Credential.LoginActivity;
 import android.hmkcode.com.myapplication123.MyTeams.MyTeams;
 import android.hmkcode.com.myapplication123.R;
 import android.hmkcode.com.myapplication123.SessionManager.SessionManager;
+import android.hmkcode.com.myapplication123.Utitlites.MyToast;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
+import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -17,10 +22,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mikepenz.crossfadedrawerlayout.view.CrossfadeDrawerLayout;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
@@ -42,6 +49,12 @@ import com.mikepenz.materialize.util.UIUtils;
 import android.hmkcode.com.myapplication123.Classes.User;
 import android.hmkcode.com.myapplication123.Profile.MyProfile;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
     private AccountHeader headerResult = null;
     private Drawer result = null;
@@ -49,7 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private CrossfadeDrawerLayout crossfadeDrawerLayout = null;
     SessionManager session;
     User myuser;
-
+    GoogleCloudMessaging gcm;
+    String regId;
     Fragment fragment;
     FragmentManager fragmentManager;
 
@@ -66,8 +80,6 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
-
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         fragment = new MyTeams();
@@ -82,6 +94,13 @@ public class MainActivity extends AppCompatActivity {
         String data = myuser.getProfilePictureBase64();
         byte[] myimg = Base64.decode(data, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
+
+
+        sendToken();
+
+
+       // new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
+
 //        Bitmap bmap = myuser.imageGetFromInternal(getApplicationContext(),"userImage");
 
         // Create a few sample profile
@@ -257,5 +276,165 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //        return super.onOptionsItemSelected(item);
 //    }
+
+
+
+    /*Notification GCM*/
+    public void sendToken(){
+        regId = registerGCM();
+    }
+
+    public String registerGCM() {
+        String regId;
+        gcm = GoogleCloudMessaging.getInstance(this);
+        registerInBackground();
+
+        return null;
+    }
+
+    private void registerInBackground() {
+        new AsyncTask<Void, Void, String>() {
+            @Override
+            protected String doInBackground(Void... params) {
+                String msg = "";
+
+                try {
+                    if (gcm == null) {
+                        gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+                    }
+                    regId = gcm.register(Utilites.GOOGLE_PROJECT_ID);
+                    msg = "Device registered, registration ID=" + regId;
+
+                } catch (IOException ex) {
+                    msg = "Error :" + ex.getMessage();
+                    Log.d("RegisterActivity", "Error: " + msg);
+                }
+                Log.d("RegisterActivity", "AsyncTask completed: " + msg);
+                return msg;
+            }
+
+            @Override
+            protected void onPostExecute(String msg) {
+                Toast.makeText(getApplicationContext(),
+                        "Registered with GCM Server." + msg, Toast.LENGTH_LONG)
+                        .show();
+                SendToServer();
+
+            }
+        }.execute(null, null, null);
+    }
+
+
+    public void SendToServer(){
+
+        new SendTokenToServer().execute(Utilites.URL_Notification_URL);
+    }
+
+
+    private class SendTokenToServer extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Send Token To Server ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = null;
+            try {
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("userId", myuser.getId());
+                jsonObject.put("token",  regId);
+                result = WebServiceHandler.handler(urls[0], jsonObject);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            MyToast.toast(getApplicationContext(),"server data :" + result);
+            progressDialog.dismiss();
+
+
+        }
+
+
+    }
+
+
+
+
+    private class HttpAsyncTask2 extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Send Users ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = "hh";
+            try {
+
+                JSONArray jsonArray = new JSONArray();
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id", 69);
+                jsonArray.put(jsonObject);
+
+                jsonObject = new JSONObject();
+                jsonObject.put("id", 68);
+
+                jsonArray.put(jsonObject);
+
+
+                JSONObject userList = new JSONObject();
+                userList.put("teamId", 282);
+                userList.put("usersId", jsonArray);
+
+
+                result = WebServiceHandler.handler(urls[0], userList);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+            //MyToast.toast(getActivity().getApplicationContext(), result + " ");
+            progressDialog.cancel();
+
+        }
+    }
+
+
 }
 

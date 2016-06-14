@@ -10,10 +10,10 @@ public class Utilites {
 //    static String IP = "localhost";
 //    static String IP = "168.254.154.163";
 //    static String IP = "10.144.3.172";
-//    static String IP = "10.0.0.66";
+    static String IP = "10.0.0.187";
 //    static String IP = "192.168.72.1";
-//    static String IP = "10.140.200.63";
-    static String IP = "192.168.1.4";
+//    static String IP = "10.140.200.120";
+//    static String IP = "192.168.1.4";
 
     public static final String MESSAGE_KEY = "message";
     public static final String GOOGLE_PROJECT_ID = "209716861273";

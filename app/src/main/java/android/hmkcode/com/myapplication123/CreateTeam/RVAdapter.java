@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.hmkcode.com.myapplication123.Classes.User;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.R;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
 import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
 import android.os.AsyncTask;
 import android.support.v7.widget.CardView;
@@ -15,7 +16,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -52,6 +55,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
 
 
 
+
     RVAdapter(List<User> users){
         this.users = users;
     }
@@ -76,6 +80,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
             @Override
             public void onClick(View v) {
                 MyToast.toast(v.getContext(),"View clicked" + ":P" + users.get(i).getName());
+                new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
+
             }
         });
 //        personViewHolder.personPhoto.setImageResource(persons.get(i).photoId);
@@ -86,5 +92,84 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder>{
         return users.size();
     }
 
+
+    public class HttpAsyncTask2 extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progressDialog = new ProgressDialog(get());
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Send Users ...");
+//            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = "hh";
+            try {
+
+                /*Using Gson Library JSON*/
+                JSONArray jsonArray = new JSONArray();
+
+                JSONObject jsonObject1 = new JSONObject();
+                jsonObject1.put("id",2);
+
+                JSONObject jsonObject2 = new JSONObject();
+                jsonObject1.put("id",3);
+
+                jsonArray.put(jsonObject1);
+                jsonArray.put(jsonObject2);
+
+
+                JSONObject userList = new JSONObject();
+                userList.put("teamId",50);
+                userList.put("usersId",jsonArray);
+
+//                MyToast.toast(getActivity(),userList.toString());
+
+
+
+                result = WebServiceHandler.handler(urls[0], userList);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+//            MyToast.toast(getActivity().getApplicationContext(), result + " ");
+
+//            Gson jsonBuilder = new Gson();
+//            Type myList = new TypeToken<ArrayList<User>>(){}.getType();
+//            myUsers = new ArrayList<>();
+//            myUsers = jsonBuilder.fromJson(result,myList);
+//
+////            for (User user : myUsers) {
+////                users2.add(new User(user.getName(), user.getEmail()));
+//////                users2.add(new User("Ahmed Hamdy 2", "ahmedhamdy2222@gmail.com"));
+////
+////                MyToast.toast(getActivity().getApplicationContext(), user.getEmail() + " ");
+////            }
+//
+//
+//            initializeData();
+//            initializeAdapter();
+//            progressDialog.cancel();
+
+        }
+
+
+    }
 
 }
