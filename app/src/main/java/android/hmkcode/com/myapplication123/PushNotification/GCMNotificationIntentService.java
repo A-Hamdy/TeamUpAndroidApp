@@ -52,18 +52,15 @@ public class GCMNotificationIntentService extends IntentService {
                     .equals(messageType)) {
 
                 for (int i = 0; i < 3; i++) {
-                    Log.i(TAG, "Work" + (i + 1) + "/5 @ " + SystemClock.elapsedRealtime());
-                    try {
+                     try {
                         Thread.sleep(5000);
                     } catch (InterruptedException e) {
                     }
 
                 }
-                Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
 
                 sendNotification((String) extras.get(Utilites.MESSAGE_KEY));
-                Log.i(TAG, "Received: " + extras.toString());
-            }
+             }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }

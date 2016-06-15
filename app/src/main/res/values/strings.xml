@@ -22,5 +22,14 @@
     <string name="action_delete">Delete</string>
     <string name="backdrop_title">LOVE MUSIC</string>
     <string name="backdrop_subtitle">This season top 20 albums</string>
-
+    <string-array name="spinnerarray">
+        <item>Malaysia</item>
+        <item>United States</item>
+        <item>Indonesia</item>
+        <item>France</item>
+        <item>Italy</item>
+        <item>Singapore</item>
+        <item>New</item>
+        <item>India</item>
+    </string-array>
 </resources>

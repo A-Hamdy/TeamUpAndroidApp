@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -17,15 +18,14 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.MyViewHolder
     private List<Skill> skillsList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView category, skill, ratingDescription;
-        public RatingBar stars;
+        public TextView category, skill;
+        public ImageView skillImage;
 
         public MyViewHolder(View view) {
             super(view);
             category = (TextView) view.findViewById(R.id.category);
-            ratingDescription = (TextView) view.findViewById(R.id.rateDescription);
-            skill = (TextView) view.findViewById(R.id.skill);
-            stars = (RatingBar) view.findViewById(R.id.skillStars);
+             skill = (TextView) view.findViewById(R.id.skill);
+            skillImage = (ImageView) view.findViewById(R.id.skill_image);
 
         }
     }
@@ -47,16 +47,17 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.MyViewHolder
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Skill skill = skillsList.get(position);
         holder.category.setText(skill.getCategory());
-        holder.ratingDescription.setText(skill.getRatingDescription());
         holder.skill.setText(skill.getSkill());
-        String rating = (String) holder.ratingDescription.getText();
 
-        if (rating.equalsIgnoreCase("poor"))
-            holder.stars.setRating(1);
-        else if (rating.equalsIgnoreCase("good"))
-            holder.stars.setRating(2);
-        else if (rating.equalsIgnoreCase("excellent"))
-            holder.stars.setRating(3);
+        String myCategory = skill.getCategory();
+        if (myCategory.equalsIgnoreCase("IT"))
+            holder.skillImage.setImageResource(R.drawable.skillicon_it);
+        else if (myCategory.equalsIgnoreCase("Game Development"))
+            holder.skillImage.setImageResource(R.drawable.skillicon_game);
+        else if (myCategory.equalsIgnoreCase("Design"))
+            holder.skillImage.setImageResource(R.drawable.skillicon_design);
+        else
+            holder.skillImage.setImageResource(R.drawable.skillicon_it);
 
 
 

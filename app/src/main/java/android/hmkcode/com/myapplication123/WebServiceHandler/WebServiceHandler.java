@@ -116,4 +116,54 @@ public class WebServiceHandler {
         return  result.toString();
     }
 
+    /*Get Method*/
+    public static String handler(String targetUrl,String method)
+    {
+        HttpURLConnection urlConnection = null;
+
+        StringBuilder result = new StringBuilder();
+
+
+        try {
+            URL url = new URL(targetUrl);
+            urlConnection = (HttpURLConnection) url.openConnection();
+
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setUseCaches(false);
+            urlConnection.setConnectTimeout(10000);
+            urlConnection.setReadTimeout(10000);
+            urlConnection.setFollowRedirects(true);
+            urlConnection.setInstanceFollowRedirects(true);
+            urlConnection.connect();
+
+
+            int HttpResult =urlConnection.getResponseCode();
+            if(HttpResult == HttpURLConnection.HTTP_OK)
+            {
+                BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream(),"utf-8"));
+                String line = null;
+                while ((line = br.readLine()) != null)
+                {
+                    result.append(line + "\n");
+                }
+                br.close();
+
+            }else{
+                System.out.println(urlConnection.getResponseMessage());
+            }
+        } catch (MalformedURLException e) {
+
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+
+            e.printStackTrace();
+        }finally{
+            if(urlConnection!=null)
+                urlConnection.disconnect();
+        }
+
+        return  result.toString();
+    }
+
 }

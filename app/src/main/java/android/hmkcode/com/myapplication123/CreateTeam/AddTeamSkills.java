@@ -1,24 +1,44 @@
 package android.hmkcode.com.myapplication123.CreateTeam;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.hmkcode.com.myapplication123.Classes.Skill;
+import android.hmkcode.com.myapplication123.Utitlites.MyToast;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
+import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.hmkcode.com.myapplication123.R;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,26 +50,32 @@ public class AddTeamSkills extends Fragment {
     private RecyclerView recyclerView;
     private SkillAdapter mAdapter;
     Fragment fragment;
-
+    Spinner spinner_category, spinner_skill;
     public AddTeamSkills() {
         // Required empty public constructor
     }
-
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        setHasOptionsMenu(true);
+
+
+        View v = inflater.inflate(R.layout.fragment_add_team_skills, container, false);
+        View v2 = inflater.inflate(R.layout.alertdialog_view, container, false);
+
+
+        spinner_category = (Spinner) v2.findViewById(R.id.catspinner);
+        spinner_skill = (Spinner) v2.findViewById(R.id.skillspinner);
+
+
         return inflater.inflate(R.layout.fragment_add_team_skills, container, false);
     }
 
@@ -58,6 +84,8 @@ public class AddTeamSkills extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_skill);
+
+        new HttpAsyncTasks().execute(Utilites.URL_GetAllCategories);
 
         mAdapter = new SkillAdapter(skillList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
@@ -70,19 +98,7 @@ public class AddTeamSkills extends Fragment {
                 Skill skill = skillList.get(position);
                 Toast.makeText(getContext(), skill.getCategory() + " is selected!", Toast.LENGTH_SHORT).show();
 
-                fragment = new TeamUsersList();
 
-                Bundle dataId = new Bundle();
-                dataId.putInt("ownerId",getArguments().getInt("ownerId"));
-                dataId.putInt("skillId",getArguments().getInt("skillId"));
-                fragment.setArguments(dataId);
-
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.teamAddSkill_fragment, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
 
             }
 
@@ -99,7 +115,7 @@ public class AddTeamSkills extends Fragment {
 
     }
 
-     public void onButtonPressed(Uri uri) {
+    public void onButtonPressed(Uri uri) {
 
 
     }
@@ -113,19 +129,18 @@ public class AddTeamSkills extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
     }
 
 
     private void prepareMovieData() {
-        Skill skill = new Skill("Computer Science", "Information Techonloy Skill", "Poor");
-        skillList.add(skill);
-
-        skill = new Skill("Computer Tech", "Information  Skill", "Good");
-        skillList.add(skill);
-
-        skill = new Skill("Science", "Techonloy Skill", "Excellent");
-        skillList.add(skill);
+//        Skill skill = new Skill("Computer Science", "Information Techonloy Skill", "Poor");
+//        skillList.add(skill);
+//
+//        skill = new Skill("Computer Tech", "Information  Skill", "Good");
+//        skillList.add(skill);
+//
+//        skill = new Skill("Science", "Techonloy Skill", "Excellent");
+//        skillList.add(skill);
 
 
         mAdapter.notifyDataSetChanged();
@@ -180,5 +195,120 @@ public class AddTeamSkills extends Fragment {
 
         }
     }
+
+
+    public class HttpAsyncTasks extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Getting Skills ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = WebServiceHandler.handler(urls[0], "get");
+            return result;
+
+        }
+
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            MyToast.toast(getContext(),result + "skills",2);
+            progressDialog.cancel();
+
+        }
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_add_skill, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.add_skill) {
+            viewAlertDialog();
+        }
+        if(id == R.id.done_add_skill){
+
+            fragment = new TeamUsersList();
+
+            Bundle dataId = new Bundle();
+            dataId.putInt("ownerId", getArguments().getInt("ownerId"));
+            dataId.putInt("skillId", getArguments().getInt("skillId"));
+            fragment.setArguments(dataId);
+
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.teamAddSkill_fragment, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public void viewAlertDialog() {
+        // Try to Make new Once and Show Many
+
+
+        String[] s = {"ahmde", "Arica", "India ", "Arica", "India ", "Arica", "India ", "Arica", "India ", "Arica"};
+
+
+        LayoutInflater li = LayoutInflater.from(getContext());
+        View promptsView = li.inflate(R.layout.alertdialog_view, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setView(promptsView);
+
+
+        final Spinner categorySpinner = (Spinner) promptsView.findViewById(R.id.catspinner);
+        final Spinner skillSpinner = (Spinner) promptsView.findViewById(R.id.skillspinner);
+
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, s);
+        ArrayAdapter<String> adp2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, s);
+
+        adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        categorySpinner.setAdapter(adp);
+        skillSpinner.setAdapter(adp);
+
+
+        builder.setTitle("Choose Skill");
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String item = (String) categorySpinner.getSelectedItem();
+                MyToast.toast(getContext(), item + " : item");
+            }
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        alertDialog.setCanceledOnTouchOutside(true);
+
+
+    }
+
 
 }

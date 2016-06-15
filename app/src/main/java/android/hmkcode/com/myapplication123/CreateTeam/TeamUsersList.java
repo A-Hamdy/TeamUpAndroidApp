@@ -209,9 +209,6 @@ public class TeamUsersList extends Fragment {
                 userList.put("teamId",50);
                 userList.put("usersId",jsonArray);
 
-//                MyToast.toast(getActivity(),userList.toString());
-
-
 
                 result = WebServiceHandler.handler(urls[0], userList);
 
