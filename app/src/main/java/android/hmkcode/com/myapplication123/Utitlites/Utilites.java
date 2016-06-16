@@ -11,9 +11,9 @@ public class Utilites {
 //    static String IP = "168.254.154.163";
 //    static String IP = "10.144.3.172";
 //    static String IP = "10.0.0.187";
-    static String IP = "10.118.49.177";
+//    static String IP = "10.118.49.177";
 //    static String IP = "10.140.200.120";
-//    static String IP = "192.168.43.21";
+    static String IP = "192.168.1.11";
 
     public static final String MESSAGE_KEY = "message";
     public static final String GOOGLE_PROJECT_ID = "209716861273";

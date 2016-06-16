@@ -307,9 +307,9 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (IOException ex) {
                     msg = "Error :" + ex.getMessage();
-                    Log.d("RegisterActivity", "Error: " + msg);
+
                 }
-                Log.d("RegisterActivity", "AsyncTask completed: " + msg);
+
                 return msg;
             }
 

@@ -3,7 +3,9 @@ package android.hmkcode.com.myapplication123.CreateTeam;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.hmkcode.com.myapplication123.Classes.CategorySkills;
 import android.hmkcode.com.myapplication123.Classes.Skill;
+import android.hmkcode.com.myapplication123.Classes.SkillInCategory;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.Utitlites.Utilites;
 import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
@@ -28,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.hmkcode.com.myapplication123.R;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -39,6 +42,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +55,7 @@ public class AddTeamSkills extends Fragment {
     private SkillAdapter mAdapter;
     Fragment fragment;
     Spinner spinner_category, spinner_skill;
+    ArrayList<CategorySkills> categorySkillsArrayList;
     public AddTeamSkills() {
         // Required empty public constructor
     }
@@ -67,6 +72,7 @@ public class AddTeamSkills extends Fragment {
                              Bundle savedInstanceState) {
         setHasOptionsMenu(true);
 
+        categorySkillsArrayList = new ArrayList<>();
 
         View v = inflater.inflate(R.layout.fragment_add_team_skills, container, false);
         View v2 = inflater.inflate(R.layout.alertdialog_view, container, false);
@@ -222,8 +228,44 @@ public class AddTeamSkills extends Fragment {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            MyToast.toast(getContext(),result + "skills",2);
-            progressDialog.cancel();
+
+//            MyToast.toast(getContext(),result + "  ");
+
+            try {
+                JSONArray jsonArray = new JSONArray(result);
+                for (int i=0 ; i < jsonArray.length() ; i++)
+                {
+                    JSONObject categoryObject = jsonArray.getJSONObject(i);
+                    CategorySkills category = new CategorySkills();
+                    category.setId(categoryObject.getInt("id"));
+                    category.setName(categoryObject.getString("name"));
+                    JSONArray skillsArray = categoryObject.getJSONArray("skill");
+
+                    ArrayList<SkillInCategory> skills = new ArrayList<>();
+                    for (int j=0 ; j < skillsArray.length() ; j++)
+                    {
+                        JSONObject skillObject = skillsArray.getJSONObject(j);
+                        SkillInCategory skillInCategory = new SkillInCategory();
+                        skillInCategory.setId(skillObject.getInt("id"));
+                        skillInCategory.setName(skillObject.getString("name"));
+                        skills.add(skillInCategory);
+
+                    }
+
+                    category.setSkills(skills);
+
+                    categorySkillsArrayList.add(category);
+
+                }
+
+
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+             progressDialog.cancel();
 
         }
     }
@@ -262,11 +304,16 @@ public class AddTeamSkills extends Fragment {
 
 
     public void viewAlertDialog() {
-        // Try to Make new Once and Show Many
-
 
         String[] s = {"ahmde", "Arica", "India ", "Arica", "India ", "Arica", "India ", "Arica", "India ", "Arica"};
+        ArrayList<String> categoryName = new ArrayList<>();
+        final ArrayList<String> skillName = new ArrayList<>();
 
+        for (CategorySkills categorySkills : categorySkillsArrayList)
+        {
+            categoryName.add(categorySkills.getName());
+
+        }
 
         LayoutInflater li = LayoutInflater.from(getContext());
         View promptsView = li.inflate(R.layout.alertdialog_view, null);
@@ -277,20 +324,49 @@ public class AddTeamSkills extends Fragment {
         final Spinner categorySpinner = (Spinner) promptsView.findViewById(R.id.catspinner);
         final Spinner skillSpinner = (Spinner) promptsView.findViewById(R.id.skillspinner);
 
-        ArrayAdapter<String> adp = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, s);
-        ArrayAdapter<String> adp2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, s);
+        ArrayAdapter<String> adp = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categoryName);
+        final ArrayAdapter<String> adp2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, skillName);
 
         adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         categorySpinner.setAdapter(adp);
-        skillSpinner.setAdapter(adp);
+        skillSpinner.setAdapter(adp2);
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String name = (String) parent.getItemAtPosition(position);
+                MyToast.toast(getContext(), name + " : name");
+                skillName.clear();
+                for (CategorySkills categorySkills : categorySkillsArrayList)
+                {
+                    if(categorySkills.getName().equals(name))
+                    {
+                        for (SkillInCategory skillInCategory : categorySkills.getSkills())
+                        {
+                            skillName.add(skillInCategory.getName());
+                        }
+                    }
+
+                    adp2.notifyDataSetChanged();
+
+
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
         builder.setTitle("Choose Skill");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
+            public void onClick(DialogInterface dialog, int which)
+            {
                 String item = (String) categorySpinner.getSelectedItem();
                 MyToast.toast(getContext(), item + " : item");
             }
