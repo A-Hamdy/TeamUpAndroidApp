@@ -368,7 +368,13 @@ public class AddTeamSkills extends Fragment {
             public void onClick(DialogInterface dialog, int which)
             {
                 String item = (String) categorySpinner.getSelectedItem();
-                MyToast.toast(getContext(), item + " : item");
+                String item2 = (String) skillSpinner.getSelectedItem();
+                int id = GetSkillID(item2);
+                MyToast.toast(getContext(), item + " : CATEGORY - " + item2 + "SKILL = ID :" + id);
+
+
+
+
             }
         });
 
@@ -384,6 +390,25 @@ public class AddTeamSkills extends Fragment {
         alertDialog.setCanceledOnTouchOutside(true);
 
 
+    }
+
+
+    int GetSkillID(String skillname){
+        int skillID = 0;
+
+        for (CategorySkills categorySkills : categorySkillsArrayList)
+        {
+                for (SkillInCategory skillInCategory : categorySkills.getSkills())
+                {
+                    if (skillInCategory.getName().equals(skillname))
+                    {
+                        skillID =  skillInCategory.getId();
+                    }
+                }
+
+        }
+
+        return skillID;
     }
 
 
