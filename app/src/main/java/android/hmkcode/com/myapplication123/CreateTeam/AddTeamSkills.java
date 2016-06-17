@@ -3,6 +3,9 @@ package android.hmkcode.com.myapplication123.CreateTeam;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.hmkcode.com.myapplication123.Classes.CategorySkills;
 import android.hmkcode.com.myapplication123.Classes.Skill;
 import android.hmkcode.com.myapplication123.Classes.SkillInCategory;
@@ -21,6 +24,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -38,6 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.mikepenz.materialize.color.Material;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,6 +99,51 @@ public class AddTeamSkills extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_skill);
+
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    // Get RecyclerView item from the ViewHolder
+                    View itemView = viewHolder.itemView;
+
+                    Paint p = new Paint();
+                    if (dX > 0) {
+                        p.setColor(Color.parseColor("#E91E63"));
+                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
+                                (float) itemView.getBottom(), p);
+                    } else {
+                        p.setColor(Color.parseColor("#E91E63"));
+                        c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
+                                (float) itemView.getRight(), (float) itemView.getBottom(), p);
+                    }
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
+                }
+            }
+
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
+                //Remove swiped item from list and notify the RecyclerView
+                skillList.remove(viewHolder.getAdapterPosition());
+                View view = viewHolder.itemView;
+                TextView textView = (TextView) view.findViewById(R.id.skill);
+                skillsIds.remove(Integer.valueOf(GetSkillID(textView.getText().toString())));
+                MyToast.toast(getContext(),textView.getText().toString() + " Deleted !");
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
+
 
         new HttpAsyncTasks().execute(Utilites.URL_GetAllCategories);
 

@@ -24,23 +24,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1746cb68-8e9b-483c-8c65-feb21198497c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/user_added.png" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/RVAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/TeamUsersList.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/A1SavedCodeSnippets/Snippets.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/A1SavedCodeSnippets/Snippets.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Classes/Team.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Classes/Team.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Classes/User.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Classes/User.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/CreateTeam.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/CreateTeam.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Credential/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Credential/LoginActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/MainActivity/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/MainActivity/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Utitlites/Utilites.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Utitlites/Utilites.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_create_team.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_create_team.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/skill_row_content.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/skill_row_content.xml" />
     </list>
     <ignored path="MyApplication123.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -78,12 +63,12 @@
       <file leaf-file-name="AddTeamSkills.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6991404">
-              <caret line="445" column="0" selection-start-line="445" selection-start-column="0" selection-end-line="445" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.53052634">
+              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="method#onMove#0;class#3500:5557" expanded="false" />
                 <element signature="method#onCreateOptionsMenu#0;class#AddTeamSkills#0" expanded="false" />
-                <element signature="method#viewAlertDialog#0;class#AddTeamSkills#0" expanded="false" />
                 <element signature="method#GetSkillID#0;class#AddTeamSkills#0" expanded="false" />
               </folding>
             </state>
@@ -135,6 +120,16 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="-3.84">
               <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SkillAdapter.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/SkillAdapter.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -3089,7 +3084,7 @@
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30716723" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14163822" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -3325,14 +3320,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/SkillAdapter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_add_team_skills.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.4444447">
@@ -3500,7 +3487,7 @@
         <state vertical-scroll-proportion="0.33333334">
           <caret line="517" column="0" selection-start-line="517" selection-start-column="0" selection-end-line="517" selection-end-column="0" />
           <folding>
-            <element signature="e#19920#20032#0" expanded="true" />
+            <element signature="e#19920#20032#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3526,8 +3513,8 @@
         <state vertical-scroll-proportion="0.45849803">
           <caret line="233" column="0" selection-start-line="233" selection-start-column="0" selection-end-line="233" selection-end-column="0" />
           <folding>
-            <element signature="e#10711#10948#0" expanded="true" />
-            <element signature="e#10947#10948#0" expanded="true" />
+            <element signature="e#10711#10948#0" expanded="false" />
+            <element signature="e#10947#10948#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3540,14 +3527,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/SkillAdapter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="17" column="35" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6991404">
-          <caret line="445" column="0" selection-start-line="445" selection-start-column="0" selection-end-line="445" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.53052634">
+          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="method#onMove#0;class#3500:5557" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#AddTeamSkills#0" expanded="false" />
-            <element signature="method#viewAlertDialog#0;class#AddTeamSkills#0" expanded="false" />
             <element signature="method#GetSkillID#0;class#AddTeamSkills#0" expanded="false" />
           </folding>
         </state>
