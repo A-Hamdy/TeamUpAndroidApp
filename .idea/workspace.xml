@@ -25,7 +25,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1746cb68-8e9b-483c-8c65-feb21198497c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java" />
     </list>
     <ignored path="MyApplication123.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -60,17 +60,27 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddTeamSkills.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AddTeamSkills.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.53052634">
-              <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#onMove#0;class#3500:5557" expanded="false" />
                 <element signature="method#onCreateOptionsMenu#0;class#AddTeamSkills#0" expanded="false" />
                 <element signature="method#GetSkillID#0;class#AddTeamSkills#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GCMNotificationIntentService.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.70736843">
+              <caret line="98" column="49" selection-start-line="98" selection-start-column="49" selection-end-line="98" selection-end-column="49" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -2181,7 +2191,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Classes/CategorySkills.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/skill_row_content.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/A1SavedCodeSnippets/Snippets.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Classes/Team.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_create_team.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/menu_add_skill.xml" />
@@ -2199,6 +2208,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/Credential/LoginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/ViewSuggestedUsers.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java" />
       </list>
     </option>
   </component>
@@ -2332,36 +2342,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyApplication123" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyApplication123" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -2389,42 +2369,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyApplication123" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="menu" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MyApplication123" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2478,6 +2422,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="Utitlites" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MyApplication123" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="myapplication123" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PushNotification" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2791,11 +2757,11 @@
       <recent name="android.hmkcode.com.myapplication123.CreateTeam" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Projects\MyApplication123\app\src\main\res\raw" />
+      <recent name="D:\Projects\MyApplication123\app\src\main\res" />
       <recent name="D:\Projects\MyApplication123\app\src\main\res\drawable" />
       <recent name="D:\Projects\MyApplication123\app\src\main\res\layout" />
       <recent name="D:\Projects\MyApplication123\app\src\main\res\drawable-xhdpi" />
-      <recent name="D:\Projects\MyApplication123\app\src\main\res\drawable-mdpi" />
-      <recent name="D:\Projects\MyApplication123\app\src\main\res\drawable-hdpi" />
     </key>
   </component>
   <component name="RunManager" selected="Android Application.app">
@@ -3075,7 +3041,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -3247,13 +3213,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="8" column="13" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="14" selection-start-line="62" selection-start-column="14" selection-end-line="62" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -3537,14 +3496,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/CreateTeam/AddTeamSkills.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53052634">
-          <caret line="129" column="0" selection-start-line="129" selection-start-column="0" selection-end-line="129" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="0" selection-start-line="102" selection-start-column="0" selection-end-line="102" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#onMove#0;class#3500:5557" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#AddTeamSkills#0" expanded="false" />
             <element signature="method#GetSkillID#0;class#AddTeamSkills#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/hmkcode/com/myapplication123/PushNotification/GCMNotificationIntentService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70736843">
+          <caret line="98" column="49" selection-start-line="98" selection-start-column="49" selection-end-line="98" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>

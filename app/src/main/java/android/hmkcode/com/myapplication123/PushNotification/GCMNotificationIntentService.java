@@ -10,6 +10,7 @@ import android.hmkcode.com.myapplication123.MainActivity.MainActivity;
 import android.hmkcode.com.myapplication123.R;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.Utitlites.Utilites;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
@@ -82,7 +83,7 @@ public class GCMNotificationIntentService extends IntentService {
         }
 
 
-        MyToast.toast(getApplicationContext(), "Title : " + notifyMessage);
+
 
         mNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
@@ -90,11 +91,13 @@ public class GCMNotificationIntentService extends IntentService {
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
                 new Intent(this, MainActivity.class), 0);
 
+        Uri sound = Uri.parse("android.resource://"+getApplicationContext().getPackageName()+"/"+R.raw.cool_sound);
+
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 this).setSmallIcon(R.drawable.logo)
-                .setContentTitle("TeamUP Notification 2")
-                .setStyle(new NotificationCompat.BigTextStyle().bigText(notifyMessage))
-                .setContentText(notifyMessage);
+                .setContentTitle("TeamUP")
+                .setContentText(notifyMessage + "d you to join his team")
+                .setSound(sound);
 
         MyToast.toast(getApplicationContext(), msg);
 
