@@ -19,10 +19,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:id="@+id/imageView2"
+            android:id="@+id/teamImage"
             android:src="@drawable/defaultimg"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
+             android:scaleType="centerCrop"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
@@ -33,7 +32,7 @@
             android:text="Team Name"
             android:id="@+id/textView3"
             android:layout_marginTop="27dp"
-            android:layout_below="@+id/imageView2"
+            android:layout_below="@+id/teamImage"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -111,19 +110,6 @@
             android:hint="Enter Team Duration"
             android:id="@+id/createTeamDuration"
             android:layout_below="@+id/textView6"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="SAVE"
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimary"
-            android:id="@+id/createTeamSaveButton"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 

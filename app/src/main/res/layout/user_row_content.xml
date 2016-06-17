@@ -20,7 +20,7 @@
     android:layout_width="50dp"
     android:layout_height="50dp"
     android:src="@drawable/skillicon_it"
-    android:id="@+id/skill_image"/>
+    android:id="@+id/user_image"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -29,23 +29,36 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/category"
+                android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/skill"
-                android:text="Category"
+                android:layout_alignTop="@+id/user_email"
+                android:text="Name"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/skill"
+                android:id="@+id/user_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
                 android:layout_alignParentTop="true"
-                android:text="Skill" />
+                android:text="Email" />
+
+            <TextView
+                android:id="@+id/user_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/user_checked"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="notChecked"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </LinearLayout>

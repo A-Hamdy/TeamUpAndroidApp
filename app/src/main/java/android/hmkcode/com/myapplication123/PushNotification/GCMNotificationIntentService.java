@@ -84,8 +84,6 @@ public class GCMNotificationIntentService extends IntentService {
 
         MyToast.toast(getApplicationContext(), "Title : " + notifyMessage);
 
-        Log.d(TAG, "Preparing to send notification...: " + msg);
-        Log.d(TAG, "Preparing to send notification...: JSON " + notifyMessage);
         mNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -103,6 +101,5 @@ public class GCMNotificationIntentService extends IntentService {
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
-        Log.d(TAG, "Notification sent successfully.");
-    }
+     }
 }

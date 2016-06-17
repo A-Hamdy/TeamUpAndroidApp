@@ -1,9 +1,18 @@
 package android.hmkcode.com.myapplication123.Classes;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
+
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by Ahmed Hamdy on 6/11/2016.
  */
-public class Team {
+public class Team  {
     
     private String id;
     private String title;
@@ -79,6 +88,29 @@ public class Team {
     }
 
 
+
+    public void teamSaveData(Context context, Team team) throws JSONException {
+
+        Gson jsonBuilder = new Gson();
+        JSONObject json = new JSONObject(jsonBuilder.toJson(team));
+        SharedPreferences.Editor editor = context.getSharedPreferences("TEAMPrefs", context.MODE_PRIVATE).edit();
+        editor.putString("teamJson", json.toString());
+        editor.commit();
+    }
+
+
+    public Team teamGetData(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences("TEAMPrefs", context.MODE_PRIVATE);
+        String myJsonText = prefs.getString("teamJson", null);
+        Team userData = null;
+
+        if (myJsonText != null) {
+            Gson jsonBuilder = new Gson();
+            userData = new Team();
+            userData = jsonBuilder.fromJson(myJsonText, Team.class);
+        }
+        return userData;
+    }
 
 
 }

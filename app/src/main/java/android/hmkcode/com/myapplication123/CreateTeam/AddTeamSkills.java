@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.hmkcode.com.myapplication123.Classes.CategorySkills;
 import android.hmkcode.com.myapplication123.Classes.Skill;
 import android.hmkcode.com.myapplication123.Classes.SkillInCategory;
+import android.hmkcode.com.myapplication123.Classes.Team;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.Utitlites.Utilites;
 import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
@@ -32,7 +33,6 @@ import android.view.ViewGroup;
 import android.hmkcode.com.myapplication123.R;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,7 +42,6 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +55,9 @@ public class AddTeamSkills extends Fragment {
     Fragment fragment;
     Spinner spinner_category, spinner_skill;
     ArrayList<CategorySkills> categorySkillsArrayList;
+    ArrayList<Integer> skillsIds;
+    Team team;
+
     public AddTeamSkills() {
         // Required empty public constructor
     }
@@ -70,9 +72,11 @@ public class AddTeamSkills extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getActivity().invalidateOptionsMenu();
         setHasOptionsMenu(true);
 
         categorySkillsArrayList = new ArrayList<>();
+        skillsIds =  new ArrayList<>();
 
         View v = inflater.inflate(R.layout.fragment_add_team_skills, container, false);
         View v2 = inflater.inflate(R.layout.alertdialog_view, container, false);
@@ -105,7 +109,6 @@ public class AddTeamSkills extends Fragment {
                 Toast.makeText(getContext(), skill.getCategory() + " is selected!", Toast.LENGTH_SHORT).show();
 
 
-
             }
 
             @Override
@@ -115,8 +118,6 @@ public class AddTeamSkills extends Fragment {
         }));
 
         recyclerView.setAdapter(mAdapter);
-
-        prepareMovieData();
 
 
     }
@@ -138,16 +139,9 @@ public class AddTeamSkills extends Fragment {
     }
 
 
-    private void prepareMovieData() {
-//        Skill skill = new Skill("Computer Science", "Information Techonloy Skill", "Poor");
-//        skillList.add(skill);
-//
-//        skill = new Skill("Computer Tech", "Information  Skill", "Good");
-//        skillList.add(skill);
-//
-//        skill = new Skill("Science", "Techonloy Skill", "Excellent");
-//        skillList.add(skill);
-
+    private void prepareSkillData(String categoryName, String skillName) {
+        Skill skill = new Skill(categoryName, skillName);
+        skillList.add(skill);
 
         mAdapter.notifyDataSetChanged();
     }
@@ -233,8 +227,7 @@ public class AddTeamSkills extends Fragment {
 
             try {
                 JSONArray jsonArray = new JSONArray(result);
-                for (int i=0 ; i < jsonArray.length() ; i++)
-                {
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject categoryObject = jsonArray.getJSONObject(i);
                     CategorySkills category = new CategorySkills();
                     category.setId(categoryObject.getInt("id"));
@@ -242,8 +235,7 @@ public class AddTeamSkills extends Fragment {
                     JSONArray skillsArray = categoryObject.getJSONArray("skill");
 
                     ArrayList<SkillInCategory> skills = new ArrayList<>();
-                    for (int j=0 ; j < skillsArray.length() ; j++)
-                    {
+                    for (int j = 0; j < skillsArray.length(); j++) {
                         JSONObject skillObject = skillsArray.getJSONObject(j);
                         SkillInCategory skillInCategory = new SkillInCategory();
                         skillInCategory.setId(skillObject.getInt("id"));
@@ -259,13 +251,11 @@ public class AddTeamSkills extends Fragment {
                 }
 
 
-
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-             progressDialog.cancel();
+            progressDialog.cancel();
 
         }
     }
@@ -273,6 +263,7 @@ public class AddTeamSkills extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
         inflater.inflate(R.menu.menu_add_skill, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -284,33 +275,35 @@ public class AddTeamSkills extends Fragment {
         if (id == R.id.add_skill) {
             viewAlertDialog();
         }
-        if(id == R.id.done_add_skill){
+        if (id == R.id.done_add_skill) {
+            startToCreateTeam();
 
-            fragment = new TeamUsersList();
-
-            Bundle dataId = new Bundle();
-            dataId.putInt("ownerId", getArguments().getInt("ownerId"));
-            dataId.putInt("skillId", getArguments().getInt("skillId"));
-            fragment.setArguments(dataId);
-
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.teamAddSkill_fragment, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
         }
         return super.onOptionsItemSelected(item);
     }
 
 
+    void startToCreateTeam() {
+
+        team = new Team();
+        team = team.teamGetData(getContext());
+        if (skillsIds.isEmpty()) {
+            MyToast.toast(getContext(),"Please Choose a Skill !");
+
+        } else {
+            team.setSkillId(skillsIds.get(0));
+            new HttpAsyncTask().execute(Utilites.URL_CreateTeam);
+        }
+
+    }
+
+
     public void viewAlertDialog() {
 
-        String[] s = {"ahmde", "Arica", "India ", "Arica", "India ", "Arica", "India ", "Arica", "India ", "Arica"};
         ArrayList<String> categoryName = new ArrayList<>();
         final ArrayList<String> skillName = new ArrayList<>();
 
-        for (CategorySkills categorySkills : categorySkillsArrayList)
-        {
+        for (CategorySkills categorySkills : categorySkillsArrayList) {
             categoryName.add(categorySkills.getName());
 
         }
@@ -339,12 +332,9 @@ public class AddTeamSkills extends Fragment {
                 String name = (String) parent.getItemAtPosition(position);
                 MyToast.toast(getContext(), name + " : name");
                 skillName.clear();
-                for (CategorySkills categorySkills : categorySkillsArrayList)
-                {
-                    if(categorySkills.getName().equals(name))
-                    {
-                        for (SkillInCategory skillInCategory : categorySkills.getSkills())
-                        {
+                for (CategorySkills categorySkills : categorySkillsArrayList) {
+                    if (categorySkills.getName().equals(name)) {
+                        for (SkillInCategory skillInCategory : categorySkills.getSkills()) {
                             skillName.add(skillInCategory.getName());
                         }
                     }
@@ -365,15 +355,14 @@ public class AddTeamSkills extends Fragment {
         builder.setTitle("Choose Skill");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which)
-            {
-                String item = (String) categorySpinner.getSelectedItem();
-                String item2 = (String) skillSpinner.getSelectedItem();
-                int id = GetSkillID(item2);
-                MyToast.toast(getContext(), item + " : CATEGORY - " + item2 + "SKILL = ID :" + id);
+            public void onClick(DialogInterface dialog, int which) {
+                String categoryName = (String) categorySpinner.getSelectedItem();
+                String skillName = (String) skillSpinner.getSelectedItem();
+                int id = GetSkillID(skillName);
+                skillsIds.add(id);
+                MyToast.toast(getContext(), categoryName + " : CATEGORY - " + skillName + "SKILL = ID :" + id);
 
-
-
+                prepareSkillData(categoryName, skillName);
 
             }
         });
@@ -393,22 +382,86 @@ public class AddTeamSkills extends Fragment {
     }
 
 
-    int GetSkillID(String skillname){
+    int GetSkillID(String skillname) {
         int skillID = 0;
 
-        for (CategorySkills categorySkills : categorySkillsArrayList)
-        {
-                for (SkillInCategory skillInCategory : categorySkills.getSkills())
-                {
-                    if (skillInCategory.getName().equals(skillname))
-                    {
-                        skillID =  skillInCategory.getId();
-                    }
+        for (CategorySkills categorySkills : categorySkillsArrayList) {
+            for (SkillInCategory skillInCategory : categorySkills.getSkills()) {
+                if (skillInCategory.getName().equals(skillname)) {
+                    skillID = skillInCategory.getId();
                 }
+            }
 
         }
 
         return skillID;
+    }
+
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Creating Team ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = null;
+            try {
+
+                /*Using Gson Library JSON*/
+                Gson jsonBuilder = new Gson();
+                JSONObject jsonObject = new JSONObject(jsonBuilder.toJson(team));
+                result = WebServiceHandler.handler(urls[0], jsonObject);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+
+        }
+
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+            MyToast.toast(getActivity().getApplicationContext(), result + " ");
+            try {
+                JSONObject teamid = new JSONObject(result);
+                String  id = teamid.getString("id");
+                team.setId(id);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            progressDialog.cancel();
+
+            fragment = new ViewSuggestedUsers();
+
+            try {
+                team.teamSaveData(getContext(),team);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.teamAddSkill_fragment, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+        }
     }
 
 

@@ -17,6 +17,7 @@ public class Snippets {
     #6- Save Image To Internal Storage [Not Recommended Gallery Better].
     #7- Get Image from Internal Storage.
     #8- Singleton Design Pattern
+    #9- AlertDialog with Spinners
 
      */
 
@@ -89,12 +90,106 @@ public class Snippets {
 
 
 
+    [#9]
+    -----------------------------------------------------------------------------------------
+    ArrayList<String> categoryName = new ArrayList<>();
+    final ArrayList<String> skillName = new ArrayList<>();
+    for(CategorySkills categorySkills:categorySkillsArrayList)
+    {
+        categoryName.add(categorySkills.getName());
 
+    }
 
+    LayoutInflater li = LayoutInflater.from(getContext());
+    View promptsView = li.inflate(R.layout.alertdialog_view, null);
+    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+    builder.setView(promptsView);
 
+    final Spinner categorySpinner = (Spinner) promptsView.findViewById(R.id.catspinner);
+    final Spinner skillSpinner = (Spinner) promptsView.findViewById(R.id.skillspinner);
 
+    ArrayAdapter<String> adp = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categoryName);
+    final ArrayAdapter<String> adp2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, skillName);
 
-     */
+    adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+    categorySpinner.setAdapter(adp);
+    skillSpinner.setAdapter(adp2);
+
+    categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+
+    {
+        @Override
+        public void onItemSelected (AdapterView < ? > parent, View view,int position, long id){
+        String name = (String) parent.getItemAtPosition(position);
+        MyToast.toast(getContext(), name + " : name");
+        skillName.clear();
+        for (CategorySkills categorySkills : categorySkillsArrayList) {
+            if (categorySkills.getName().equals(name)) {
+                for (SkillInCategory skillInCategory : categorySkills.getSkills()) {
+                    skillName.add(skillInCategory.getName());
+                }
+            }
+            adp2.notifyDataSetChanged();
+        }
+    }
+        @Override
+        public void onNothingSelected (AdapterView < ? > parent){}
+    }
+
+    );
+    builder.setTitle("Choose Skill");
+    builder.setPositiveButton("OK",new DialogInterface.OnClickListener()
+    {
+        @Override
+        public void onClick (DialogInterface dialog,int which){
+        String categoryName = (String) categorySpinner.getSelectedItem();
+        String skillName = (String) skillSpinner.getSelectedItem();
+        int id = GetSkillID(skillName);
+        MyToast.toast(getContext(), categoryName + " : CATEGORY - " + skillName + "SKILL = ID :" + id);
+
+        prepareMovieData(categoryName, skillName);
+    }
+    }
+
+    );
+
+    builder.setNegativeButton("Cancel",new DialogInterface.OnClickListener()
+
+    {
+        @Override
+        public void onClick (DialogInterface dialog,int which){
+    }
+    }
+
+    );
+
+    final AlertDialog alertDialog = builder.create();
+    alertDialog.show();
+    alertDialog.setCanceledOnTouchOutside(true);
 
 }
+
+    int GetSkillID(String skillname) {
+        int skillID = 0;
+
+        for (CategorySkills categorySkills : categorySkillsArrayList) {
+            for (SkillInCategory skillInCategory : categorySkills.getSkills()) {
+                if (skillInCategory.getName().equals(skillname)) {
+                    skillID = skillInCategory.getId();
+                }
+            }
+
+        }
+
+        return skillID;
+    }
+
+-----------------------------------------------------------------------------------------
+
+
+        */
+
+
+        }

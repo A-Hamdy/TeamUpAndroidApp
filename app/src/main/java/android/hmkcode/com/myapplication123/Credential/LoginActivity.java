@@ -198,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            //sendToken();
+            sendToken();
             progressDialog.cancel();
 
         }
@@ -206,203 +206,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    /**/
-
-    private class HttpAsyncTask2 extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(getApplicationContext());
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Send Users ...");
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-
-
-            String result = "hh";
-            try {
-
-                /*Using Gson Library JSON*/
-                JSONArray jsonArray = new JSONArray();
-
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",69);
-                jsonArray.put(jsonObject);
-
-                jsonObject = new JSONObject();
-                jsonObject.put("id",68);
-
-                jsonArray.put(jsonObject);
-
-
-                JSONObject userList = new JSONObject();
-                userList.put("teamId",282);
-                userList.put("usersId",jsonArray);
-
-
-                result = WebServiceHandler.handler(urls[0], userList);
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return result;
-
-        }
-
-
-        // onPostExecute displays the results of the AsyncTask.
-        @Override
-        protected void onPostExecute(String result) {
-
-            //MyToast.toast(getActivity().getApplicationContext(), result + " ");
-
-
-
-//            for (User user : myUsers) {
-//                users2.add(new User(user.getName(), user.getEmail()));
-////                users2.add(new User("Ahmed Hamdy 2", "ahmedhamdy2222@gmail.com"));
-//
-//                MyToast.toast(getActivity().getApplicationContext(), user.getEmail() + " ");
-//            }
-
-
-            progressDialog.cancel();
-
-        }
-    }
-
-
-
-    /* WEBSERVICE*/
-//
-//    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
-//        ProgressDialog progressDialog;
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            progressDialog = new ProgressDialog(LoginActivity.this);
-//            progressDialog.setIndeterminate(true);
-//            progressDialog.setMessage("Please Wait ...");
-//            progressDialog.show();
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... urls) {
-//            if (myUser != null)
-//                return POST(urls[0], myUser);
-//            else
-//                return "error myUser !";
-//        }
-//
-//        // onPostExecute displays the results of the AsyncTask.
-//        @Override
-//        protected void onPostExecute(String result) {
-//            try {
-//                JSONObject resultObject = new JSONObject(result);
-//                Integer id = resultObject.getInt("id");
-//                MyToast.toast(getApplicationContext(), id + " : Your ID From Login :D");
-////                MyToast.toast(getApplicationContext(), "bytes : " + resultObject.getString("profilePictureBase64"));
-//                if (id != null) {
-//                    Intent toIntent = new Intent(getApplicationContext(),MainActivity.class);
-//                    startActivity(toIntent);
-//                    finish();
-//
-////                    String data = resultObject.getString("profilePictureBase64");
-////                    byte[] myimg = Base64.decode(data,Base64.DEFAULT);
-////                    Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
-//
-////                    String data =  resultObject.getString("profilePictureBase64");
-////                    byte[] myimg = data.getBytes();
-////                    Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
-////                    img.setImageBitmap(decodedByte);
-//
-//
-//                }
-//
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//            progressDialog.cancel();
-//
-//        }
-//    }
-
-    /*Method post*/
-//    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//        String line = "";
-//        String result = "";
-//        while ((line = bufferedReader.readLine()) != null)
-//            result += line;
-//
-//        inputStream.close();
-//        return result;
-//
-//    }
-//
-//    public static String POST(String url, User user) {
-//        InputStream inputStream = null;
-//        String result = "";
-//        try {
-//
-//            // 1. create HttpClient
-//            HttpClient httpclient = new DefaultHttpClient();
-//
-//            // 2. make POST request to the given URL
-//            HttpPost httpPost = new HttpPost(url);
-//
-//            String json = "";
-//
-//            // 3. build jsonObject
-//            JSONObject jsonObject = new JSONObject();
-//            jsonObject.accumulate("email", user.getEmail());
-//            jsonObject.accumulate("password", user.getPassword());
-//
-//            // 4. convert JSONObject to JSON to String
-//            json = jsonObject.toString();
-//
-//            // ** Alternative way to convert Person object to JSON string usin Jackson Lib
-//            // ObjectMapper mapper = new ObjectMapper();
-//            // json = mapper.writeValueAsString(person);
-//
-//            // 5. set json to StringEntity
-//            StringEntity se = new StringEntity(json);
-//
-//            // 6. set httpPost Entity
-//            httpPost.setEntity(se);
-//
-//            // 7. Set some headers to inform server about the type of the content
-//            httpPost.setHeader("Accept", "application/json");
-//            httpPost.setHeader("Content-type", "application/json");
-//
-//            // 8. Execute POST request to the given URL
-//            HttpResponse httpResponse = httpclient.execute(httpPost);
-//
-//            // 9. receive response as inputStream
-//            inputStream = httpResponse.getEntity().getContent();
-//
-//            // 10. convert inputstream to string
-//            if (inputStream != null)
-//                result = convertInputStreamToString(inputStream);
-//            else
-//                result = "Did not work!";
-//
-//        } catch (Exception e) {
-//            Log.d("InputStream", e.getLocalizedMessage());
-//        }
-//
-//        // 11. return result
-//        return result;
-//    }
 
 
     @Override
@@ -501,10 +304,10 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(LoginActivity.this);
-            progressDialog.setIndeterminate(true);
-            progressDialog.setMessage("Send Token To Server ...");
-            progressDialog.show();
+//            progressDialog = new ProgressDialog(LoginActivity.this);
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Send Token To Server ...");
+//            progressDialog.show();
         }
 
         @Override
@@ -529,8 +332,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            MyToast.toast(getApplicationContext(),"server data :" + result);
-            progressDialog.dismiss();
+            MyToast.toast(getApplicationContext(),"sent Token");
+//            progressDialog.dismiss();
 
 
         }

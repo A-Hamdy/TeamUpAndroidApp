@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
 
 
-        sendToken();
+        //sendToken();
 
 
        // new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
                             result.getDrawerLayout().closeDrawer(GravityCompat.START);
 
                         } else if (drawerItem.getIdentifier() == 2) {
+
 
                             fragment = new CreateTeam();
                             FragmentTransaction transaction = fragmentManager.beginTransaction();

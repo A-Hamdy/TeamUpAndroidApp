@@ -29,4 +29,7 @@ public class Utilites {
     public static String URL_Notification_URL  = URL + "registrationGcm";
     public static String URL_GetAllCategories  = URL + "getAllCategory";
 
+
+
+
 }
