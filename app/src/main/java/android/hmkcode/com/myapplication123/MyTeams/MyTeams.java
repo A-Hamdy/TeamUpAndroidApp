@@ -1,8 +1,17 @@
 package android.hmkcode.com.myapplication123.MyTeams;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.hmkcode.com.myapplication123.Classes.CategorySkills;
+import android.hmkcode.com.myapplication123.Classes.SkillInCategory;
+import android.hmkcode.com.myapplication123.Classes.User;
 import android.hmkcode.com.myapplication123.R;
+import android.hmkcode.com.myapplication123.Utitlites.MyToast;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
+import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +19,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,6 +33,12 @@ import java.util.List;
 
 import android.hmkcode.com.myapplication123.MyTeams.TeamGrid.TeamGrid;
 import android.hmkcode.com.myapplication123.MyTeams.TeamGrid.TeamsAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class MyTeams extends Fragment {
@@ -26,6 +46,9 @@ public class MyTeams extends Fragment {
     private RecyclerView recyclerView;
     private TeamsAdapter adapter;
     private List<TeamGrid> teamList;
+    User user;
+    ProgressDialog progressDialog;
+
 
     public MyTeams() {
         // Required empty public constructor
@@ -35,6 +58,9 @@ public class MyTeams extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+        user = new User();
+        user = user.userGetData(getContext());
 
     }
 
@@ -57,40 +83,35 @@ public class MyTeams extends Fragment {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                ImageView imageView = (ImageView) view.findViewById(R.id.thumbnail);
+                TextView textView = (TextView) view.findViewById(R.id.teamId);
+                MyToast.toast(getContext(),"PRESSES ME ID : " + textView.getText().toString());
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+
+            }
+        }));
         recyclerView.setAdapter(adapter);
 
-        prepareAlbums();
+        //prepareAlbums();
+        new HttpAsyncTasks().execute(Utilites.URL_GetMyTeamsAsOwner);
+        new HttpAsyncTasksMember().execute(Utilites.URL_GetMyTeamsAsMember);
     }
 
 
-    private void prepareAlbums() {
+    private void prepareTeams(boolean owner,String teamId ,String teamName, String teamMembersNum) {
         int[] covers = new int[]{R.drawable.albumme};
 
-        TeamGrid a = new TeamGrid("Team 1", 13, covers[0]);
+        TeamGrid a = new TeamGrid(teamId ,teamName, teamMembersNum, covers[0], owner);
         teamList.add(a);
 
-        a = new TeamGrid("Team 2", 8, covers[0]);
-        teamList.add(a);
-
-        a = new TeamGrid("Team 3", 11, covers[0]);
-        teamList.add(a);
-
-        a = new TeamGrid("Team 4", 12, covers[0]);
-        teamList.add(a);
-
-        a = new TeamGrid("Team 5", 14, covers[0]);
-        teamList.add(a);
-
-        a = new TeamGrid("Team 6", 1, covers[0]);
-        teamList.add(a);
-
-
-        adapter.notifyDataSetChanged();
     }
 
-    /**
-     * RecyclerView item decoration - give equal margin around grid item
-     */
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
         private int spanCount;
@@ -126,11 +147,188 @@ public class MyTeams extends Fragment {
         }
     }
 
-    /**
-     * Converting dp to pixel
-     */
     private int dpToPx(int dp) {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
+
+    public class HttpAsyncTasks extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Getting Teams ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            JSONObject jsonObject = new JSONObject();
+            try
+            {
+                jsonObject.put("id",user.getId());
+
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            String result = WebServiceHandler.handler(urls[0], jsonObject);
+            return result;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+
+
+            try {
+                JSONArray jsonArray = new JSONArray(result);
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject team = jsonArray.getJSONObject(i);
+
+                    String teamName = team.getString("title");
+                    String teamId = team.getString("id");
+                    JSONArray membersArrays = team.getJSONArray("userHasTeams");
+                    String teamMemberNum = membersArrays.length() + "";
+                    boolean owner = true;
+                    prepareTeams(owner,teamId, teamName, teamMemberNum);
+
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            adapter.notifyDataSetChanged();
+
+
+        }
+    }
+
+    public class HttpAsyncTasksMember extends AsyncTask<String, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            JSONObject jsonObject = new JSONObject();
+            try
+            {
+                jsonObject.put("id",user.getId());
+
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+            String result = WebServiceHandler.handler(urls[0], jsonObject);
+            return result;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+
+
+            try {
+                JSONArray jsonArray = new JSONArray(result);
+                for (int i = 0; i < jsonArray.length(); i++) {
+
+                    JSONObject team = jsonArray.getJSONObject(i);
+
+                    String teamName = team.getString("title");
+                    String teamId = team.getString("id");
+                    JSONArray membersArrays = team.getJSONArray("userHasTeams");
+                    String teamMemberNum = membersArrays.length() + "";
+                    boolean owner = false;
+                    prepareTeams(owner,teamId, teamName, teamMemberNum);
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            adapter.notifyDataSetChanged();
+            progressDialog.cancel();
+
+        }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_myteams, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public interface ClickListener {
+        void onClick(View view, int position);
+        void onLongClick(View view, int position);
+    }
+
+
+    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
+
+        private GestureDetector gestureDetector;
+        private MyTeams.ClickListener clickListener;
+
+        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final MyTeams.ClickListener clickListener) {
+            this.clickListener = clickListener;
+            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    return true;
+                }
+
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                    if (child != null && clickListener != null) {
+                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
+                    }
+                }
+            });
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+            View child = rv.findChildViewUnder(e.getX(), e.getY());
+            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+                clickListener.onClick(child, rv.getChildPosition(child));
+            }
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
+    }
+
 }

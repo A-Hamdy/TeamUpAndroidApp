@@ -24,7 +24,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.MyViewHolder
     private List<TeamGrid> teamsList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView title, count;
+        public TextView title, count, teamID;
         public ImageView thumbnail, overflow;
 
         public MyViewHolder(View view) {
@@ -33,6 +33,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.MyViewHolder
             count = (TextView) view.findViewById(R.id.count);
             thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             overflow = (ImageView) view.findViewById(R.id.overflow);
+            teamID = (TextView) view.findViewById(R.id.teamId);
         }
     }
 
@@ -52,32 +53,35 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.MyViewHolder
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        TeamGrid album = teamsList.get(position);
-        holder.title.setText(album.getName());
-        holder.count.setText(album.getNumOfMembers() + " Team Member");
-        // loading album cover using Glide library
-        Glide.with(mContext).load(album.getThumbnail()).into(holder.thumbnail);
+        final TeamGrid team = teamsList.get(position);
+        holder.title.setText(team.getName());
+        holder.count.setText(team.getNumOfMembers() + " Team Member");
+        holder.teamID.setText(team.getTeamId());
 
-        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "thumb " + holder.title.getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        if (team.isOwner())
+            holder.overflow.setImageResource(R.drawable.owner_star);
+
+        Glide.with(mContext).load(team.getThumbnail()).into(holder.thumbnail);
+//        holder.thumbnail.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(mContext, "thumb " + holder.title.getText() + " ID: " + team.getTeamId(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
-        holder.overflow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showPopupMenu(holder.overflow);
-                //Toast.makeText(mContext, "current " + holder.title.getText(), Toast.LENGTH_SHORT).show();
-            }
-        });
+//        holder.overflow.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showPopupMenu(holder.overflow);
+//                //Toast.makeText(mContext, "current " + holder.title.getText(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
-    /**
-     * Showing popup menu when tapping on 3 dots
-     */
+     /*
+    // Showing popup menu when tapping on 3 dots
+
     private void showPopupMenu(View view) {
         // inflate menu
         PopupMenu popup = new PopupMenu(mContext, view);
@@ -87,9 +91,9 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.MyViewHolder
         popup.show();
     }
 
-    /**
-     * Click listener for popup menu items
-     */
+
+    // * Click listener for popup menu items
+
     class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
 
         public MyMenuItemClickListener() {
@@ -117,7 +121,7 @@ public class TeamsAdapter extends RecyclerView.Adapter<TeamsAdapter.MyViewHolder
             Toast.makeText(mContext, "View Clicked", Toast.LENGTH_SHORT).show();
         }
     }
-
+*/
     @Override
     public int getItemCount() {
         return teamsList.size();

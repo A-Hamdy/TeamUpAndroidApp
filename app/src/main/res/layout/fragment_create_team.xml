@@ -22,8 +22,7 @@
             android:id="@+id/teamImage"
             android:src="@drawable/defaultimg"
              android:scaleType="centerCrop"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_alignParentTop="true" />
 
         <TextView
             android:layout_width="wrap_content"

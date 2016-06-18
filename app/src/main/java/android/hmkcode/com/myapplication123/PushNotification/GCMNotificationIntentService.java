@@ -96,7 +96,7 @@ public class GCMNotificationIntentService extends IntentService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 this).setSmallIcon(R.drawable.logo)
                 .setContentTitle("TeamUP")
-                .setContentText(notifyMessage + "d you to join his team")
+                .setContentText(notifyMessage + " you to join his team")
                 .setSound(sound);
 
         MyToast.toast(getApplicationContext(), msg);

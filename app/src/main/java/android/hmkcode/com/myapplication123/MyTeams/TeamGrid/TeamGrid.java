@@ -5,16 +5,37 @@ package android.hmkcode.com.myapplication123.MyTeams.TeamGrid;
  */
 public class TeamGrid {
     private String name;
-    private int numOfMembers;
+    private String teamId;
+    private String numOfMembers;
     private int thumbnail;
+    private boolean owner;
+
 
     public TeamGrid() {
     }
 
-    public TeamGrid(String name, int numOfMembers, int thumbnail) {
+    public TeamGrid(String teamId ,String name, String numOfMembers, int thumbnail, boolean owner) {
         this.name = name;
         this.numOfMembers = numOfMembers;
         this.thumbnail = thumbnail;
+        this.teamId = teamId;
+        this.owner = owner;
+    }
+
+    public boolean isOwner() {
+        return owner;
+    }
+
+    public void setOwner(boolean owner) {
+        this.owner = owner;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
     }
 
     public String getName() {
@@ -25,11 +46,11 @@ public class TeamGrid {
         this.name = name;
     }
 
-    public int getNumOfMembers() {
+    public String getNumOfMembers() {
         return numOfMembers;
     }
 
-    public void setNumOfMembers(int numOfMembers) {
+    public void setNumOfMembers(String numOfMembers) {
         this.numOfMembers = numOfMembers;
     }
 

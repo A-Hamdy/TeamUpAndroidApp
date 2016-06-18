@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mikepenz.crossfadedrawerlayout.view.CrossfadeDrawerLayout;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
-import com.mikepenz.material_design_iconic_typeface_library.MaterialDesignIconic;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -95,13 +94,10 @@ public class MainActivity extends AppCompatActivity {
         byte[] myimg = Base64.decode(data, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
 
-
-        //sendToken();
-
+       //sendToken();
 
        // new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
-
-//        Bitmap bmap = myuser.imageGetFromInternal(getApplicationContext(),"userImage");
+        // Bitmap bmap = myuser.imageGetFromInternal(getApplicationContext(),"userImage");
 
         // Create a few sample profile
         // NOTE you have to define the loader logic too. See the CustomApplication for more details
@@ -129,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
                 .withAccountHeader(headerResult) //set the AccountHeader we created earlier for the header
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_second).withIcon(FontAwesome.Icon.faw_group).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_first).withIcon(MaterialDesignIconic.Icon.gmi_account_add).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_first).withIcon(FontAwesome.Icon.faw_user_plus).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_notify).withIcon(FontAwesome.Icon.faw_bell).withIdentifier(3).withBadge("10").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_third).withIcon(FontAwesome.Icon.faw_user).withIdentifier(4),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_comments).withIdentifier(5).withBadge("2").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),

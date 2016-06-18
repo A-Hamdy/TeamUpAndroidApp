@@ -8,6 +8,7 @@ import android.hmkcode.com.myapplication123.Classes.Skill;
 import android.hmkcode.com.myapplication123.Classes.SkillInCategory;
 import android.hmkcode.com.myapplication123.Classes.Team;
 import android.hmkcode.com.myapplication123.Classes.User;
+import android.hmkcode.com.myapplication123.MyTeams.MyTeams;
 import android.hmkcode.com.myapplication123.R;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.Utitlites.Utilites;
@@ -361,6 +362,13 @@ public class ViewSuggestedUsers extends Fragment {
 
             MyToast.toast(getContext(),"sent Notification");
             progressDialog.cancel();
+
+            fragment = new MyTeams();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.teamAddSkill_fragment, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
 
         }
 
