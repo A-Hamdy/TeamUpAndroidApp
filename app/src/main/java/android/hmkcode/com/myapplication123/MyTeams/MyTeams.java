@@ -15,6 +15,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +49,7 @@ public class MyTeams extends Fragment {
     private TeamsAdapter adapter;
     private List<TeamGrid> teamList;
     User user;
+    Fragment fragment;
     ProgressDialog progressDialog;
 
 
@@ -88,7 +91,22 @@ public class MyTeams extends Fragment {
             public void onClick(View view, int position) {
                 ImageView imageView = (ImageView) view.findViewById(R.id.thumbnail);
                 TextView textView = (TextView) view.findViewById(R.id.teamId);
-                MyToast.toast(getContext(),"PRESSES ME ID : " + textView.getText().toString());
+                String team_id = textView.getText().toString();
+                MyToast.toast(getContext(),"TEAM ID : " + team_id);
+
+                Bundle bundle = new Bundle();
+                bundle.putString("TEAMID",team_id);
+
+                fragment = new ViewTeam();
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.myteampage, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+
+
+
             }
 
             @Override

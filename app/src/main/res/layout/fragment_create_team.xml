@@ -19,9 +19,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:id="@+id/teamImage"
+            android:id="@+id/team_image"
             android:src="@drawable/defaultimg"
-             android:scaleType="centerCrop"
+             android:scaleType="fitXY"
             android:layout_alignParentTop="true" />
 
         <TextView
@@ -31,7 +31,7 @@
             android:text="Team Name"
             android:id="@+id/textView3"
             android:layout_marginTop="27dp"
-            android:layout_below="@+id/teamImage"
+            android:layout_below="@+id/team_image"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 

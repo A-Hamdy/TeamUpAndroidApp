@@ -1,81 +1,278 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Profile.ProfileFragment">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <ScrollView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context=".MainActivity"
+        android:weightSum="2"
+        android:orientation="vertical" >
+
 
         <RelativeLayout
+            android:layout_weight="1.5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <!-- TODO: Update blank fragment layout -->
-            <LinearLayout
-                android:id="@+id/proLayout"
+            android:layout_height="0dp">
+
+            <ImageView
+                android:id="@+id/F1profileImage"
+
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                >
+                android:layout_height="300dp"
+                android:src="@drawable/balloon"
+                android:scaleType="fitXY"
+                android:contentDescription="Main Image"
+                android:padding="1dp"/>
 
-                <ImageView
-                    android:id="@+id/F1profileImage"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/defaultimg" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/proLayout"
-                android:orientation="vertical"
+                android:background="@drawable/image_border"
+                android:contentDescription="Image Border"
+                android:padding="0dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-                >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="image"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_action_edit"
+                android:id="@+id/imageView"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
 
 
-                <EditText
-                    android:id="@+id/F1Name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="Name"
-                    ></EditText>
-                <EditText
-                    android:id="@+id/F1Email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="Email"
-                    android:inputType="textEmailAddress" />
 
-                <EditText
-                    android:id="@+id/F1Phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:ems="10"
-                    android:hint="Phone"
-                    android:inputType="phone" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
 
-                <EditText
-                    android:id="@+id/F1Bio"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Bio" />
+            <TextView
+                android:id="@+id/F1Name"
 
-                <EditText
-                    android:id="@+id/F1Linked"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="linked-In" />
-            </LinearLayout>
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/textview_border"
+                android:hint="Enter your name..."
+                android:paddingBottom="8dp"
+                android:paddingLeft="6dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="Edit image icon"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_action_edit"
+                android:paddingTop="60dp"
+                android:id="@+id/imageView2"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+
+
 
         </RelativeLayout>
-    </ScrollView>
-</FrameLayout>
+
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:id="@+id/F1Email"
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/textview_border"
+                android:hint="Enter your Email..."
+                android:paddingTop="6dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="6dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="Edit image icon"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_action_edit"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+
+
+        </RelativeLayout>
+
+            <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:id="@+id/F1Linked"
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/textview_border"
+                android:hint="Enter your LinkedUrl..."
+                android:paddingTop="6dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="6dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
+
+            <ImageView
+                android:id="@+id/imageview4"
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="Edit image icon"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_action_edit"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+
+
+
+
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:id="@+id/F1Phone"
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/textview_border"
+                android:hint="Enter your LinkedUrl..."
+                android:paddingTop="6dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="6dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true" />
+
+            <ImageView
+                android:id="@+id/imageview5"
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="Edit image icon"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_action_edit"
+
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+
+
+
+
+
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.25"
+            android:layout_marginTop="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:id="@+id/F1Bio"
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/textview_border"
+                android:hint="Bio..."
+                android:paddingTop="6dp"
+                android:paddingBottom="8dp"
+                android:paddingLeft="6dp"
+                android:textSize="18sp"
+                android:gravity="center_vertical"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true" />
+
+            <ImageView
+                android:id="@+id/imageview6"
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:contentDescription="Edit image icon"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_action_edit"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+</ScrollView>
+
+
+

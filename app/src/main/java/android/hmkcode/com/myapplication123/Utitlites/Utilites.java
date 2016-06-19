@@ -1,5 +1,8 @@
 package android.hmkcode.com.myapplication123.Utitlites;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+
 /**
  * Created by Ahmed Hamdy on 6/1/2016.
  */
@@ -10,10 +13,10 @@ public class Utilites {
 //    static String IP = "localhost";
 //    static String IP = "168.254.154.163";
 //    static String IP = "10.144.3.172";
-    static String IP = "192.168.1.11";
+//    static String IP = "192.168.1.11";
 //    static String IP = "10.118.49.177";
 //    static String IP = "10.140.200.120";
-//    static String IP = "10.118.48.221";
+    static String IP = "10.118.48.221";
 
     public static final String MESSAGE_KEY = "message";
     public static final String GOOGLE_PROJECT_ID = "209716861273";
@@ -31,6 +34,8 @@ public class Utilites {
     public static String URL_GetMyTeamsAsOwner = URL + "getMyTeamAsOwner";
     public static String URL_GetMyTeamsAsMember= URL + "getMyTeamAsMember";
     public static String URL_GetTeamById       = URL + "getTeamById";
+
+
 
 
 }

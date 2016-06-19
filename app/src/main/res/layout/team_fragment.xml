@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyTeams.MyTeams">
+    tools:context=".MyTeams.MyTeams"
+    android:id="@+id/myteampage">
 
     <!-- TODO: Update blank fragment layout -->
 

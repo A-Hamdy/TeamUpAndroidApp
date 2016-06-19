@@ -17,6 +17,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -136,7 +138,9 @@ public class AddTeamSkills extends Fragment {
                 View view = viewHolder.itemView;
                 TextView textView = (TextView) view.findViewById(R.id.skill);
                 skillsIds.remove(Integer.valueOf(GetSkillID(textView.getText().toString())));
-                MyToast.toast(getContext(),textView.getText().toString() + " Deleted !");
+
+                MyToast.snackbar(getView(),"Skill (" + textView.getText().toString() + ") Deleted !");
+
                 mAdapter.notifyDataSetChanged();
             }
         };

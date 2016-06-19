@@ -47,13 +47,13 @@
 
             <ImageView
                 android:id="@+id/overflow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/thumbnail"
                 android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
                 android:scaleType="centerCrop"
-                android:paddingTop="5dp"
+                android:paddingTop="2dp"
                 android:paddingRight="3dp"
                 />
 

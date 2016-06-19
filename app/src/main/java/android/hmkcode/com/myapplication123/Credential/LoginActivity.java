@@ -1,6 +1,7 @@
 package android.hmkcode.com.myapplication123.Credential;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,6 +9,7 @@ import android.hmkcode.com.myapplication123.MainActivity.MainActivity;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.Utitlites.Utilites;
 import android.hmkcode.com.myapplication123.R;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -60,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
 
+
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
@@ -98,6 +102,13 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+
+    public boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        return (cm.getActiveNetworkInfo() != null);
+    }
+
 
     public boolean validate() {
         boolean valid = true;
@@ -145,8 +156,8 @@ public class LoginActivity extends AppCompatActivity {
 
             Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.albumme);
             String imgEncode = encodeToBase64(bitmap, Bitmap.CompressFormat.PNG, 100);
+            //myUser.setProfilePictureBase64(imgEncode);
             try {
-
                 /*Using Gson Library JSON*/
                 Gson jsonBuilder = new Gson();
                 JSONObject jsonObject = new JSONObject(jsonBuilder.toJson(myUser));
