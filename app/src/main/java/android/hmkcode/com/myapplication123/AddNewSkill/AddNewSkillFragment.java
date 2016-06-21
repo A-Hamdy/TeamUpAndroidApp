@@ -1,4 +1,4 @@
-package android.hmkcode.com.myapplication123.Profile;
+package android.hmkcode.com.myapplication123.AddNewSkill;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -9,11 +9,9 @@ import android.graphics.Paint;
 import android.hmkcode.com.myapplication123.Classes.CategorySkills;
 import android.hmkcode.com.myapplication123.Classes.Skill;
 import android.hmkcode.com.myapplication123.Classes.SkillInCategory;
-import android.hmkcode.com.myapplication123.Classes.Team;
 import android.hmkcode.com.myapplication123.Classes.User;
 import android.hmkcode.com.myapplication123.CreateTeam.DividerItemDecoration;
 import android.hmkcode.com.myapplication123.CreateTeam.SkillAdapter;
-import android.hmkcode.com.myapplication123.CreateTeam.ViewSuggestedUsers;
 import android.hmkcode.com.myapplication123.R;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.Utitlites.Utilites;
@@ -23,8 +21,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,9 +38,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,18 +47,17 @@ import java.util.ArrayList;
 import java.util.List;
 //skills_tab_fragment
 
-public class SkillsFragment extends Fragment {
+public class AddNewSkillFragment extends Fragment {
 
     private List<Skill> skillList = new ArrayList<>();
-    private RecyclerView recyclerView;
-    private SkillAdapter mAdapter;
-    Fragment fragment;
+
+
+
     Spinner spinner_category, spinner_skill;
     ArrayList<CategorySkills> categorySkillsArrayList;
-    ArrayList<Integer> skillsIds;
     User myUser;
 
-    public SkillsFragment() {
+    public AddNewSkillFragment() {
         // Required empty public constructor
     }
 
@@ -77,6 +69,9 @@ public class SkillsFragment extends Fragment {
         myUser = new User();
         myUser = myUser.userGetData(getContext());
 
+
+
+
     }
 
     @Override
@@ -85,15 +80,16 @@ public class SkillsFragment extends Fragment {
         getActivity().invalidateOptionsMenu();
         setHasOptionsMenu(true);
 
-        categorySkillsArrayList = new ArrayList<>();
-        skillsIds = new ArrayList<>();
 
-        View v2 = inflater.inflate(R.layout.alertdialog_view, container, false);
+
+        View v2 = inflater.inflate(R.layout.alertdialog_new_skill, container, false);
 
 
         spinner_category = (Spinner) v2.findViewById(R.id.catspinner);
-        spinner_skill = (Spinner) v2.findViewById(R.id.skillspinner);
 
+
+//        new HttpAsyncTask().execute(Utilites.URL_AddNewSkill);
+        new HttpAsyncTask().execute(Utilites.URL_Logout);
 
         return inflater.inflate(R.layout.skills_tab_fragment, container, false);
     }
@@ -102,73 +98,10 @@ public class SkillsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_skill_profile);
 
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
-
-            @Override
-            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-                return false;
-            }
-
-            @Override
-            public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    // Get RecyclerView item from the ViewHolder
-                    View itemView = viewHolder.itemView;
-
-                    Paint p = new Paint();
-                    if (dX > 0) {
-                        p.setColor(Color.parseColor("#E91E63"));
-                        c.drawRect((float) itemView.getLeft(), (float) itemView.getTop(), dX,
-                                (float) itemView.getBottom(), p);
-                    } else {
-                        p.setColor(Color.parseColor("#E91E63"));
-                        c.drawRect((float) itemView.getRight() + dX, (float) itemView.getTop(),
-                                (float) itemView.getRight(), (float) itemView.getBottom(), p);
-                    }
-                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-                }
-            }
 
 
-            @Override
-            public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
-                //Remove swiped item from list and notify the RecyclerView
-                skillList.remove(viewHolder.getAdapterPosition());
-                View view = viewHolder.itemView;
-                TextView textView = (TextView) view.findViewById(R.id.skill);
-                skillsIds.remove(Integer.valueOf(GetSkillID(textView.getText().toString())));
-                MyToast.toast(getContext(), textView.getText().toString() + " Deleted !");
-                mAdapter.notifyDataSetChanged();
-            }
-        };
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-
-
-        new HttpAsyncTasks().execute(Utilites.URL_GetAllCategories);
-
-        mAdapter = new SkillAdapter(skillList);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getContext(), recyclerView, new ClickListener() {
-
-            @Override
-            public void onClick(View view, int position) {
-
-            }
-
-            @Override
-            public void onLongClick(View view, int position) {
-
-            }
-        }));
-
-        recyclerView.setAdapter(mAdapter);
 
 
     }
@@ -189,63 +122,6 @@ public class SkillsFragment extends Fragment {
         super.onDetach();
     }
 
-
-    private void prepareSkillData(String categoryName, String skillName) {
-        Skill skill = new Skill(categoryName, skillName);
-        skillList.add(skill);
-
-        mAdapter.notifyDataSetChanged();
-    }
-
-
-    public interface ClickListener {
-        void onClick(View view, int position);
-
-        void onLongClick(View view, int position);
-    }
-
-    public static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
-
-        private GestureDetector gestureDetector;
-        private SkillsFragment.ClickListener clickListener;
-
-        public RecyclerTouchListener(Context context, final RecyclerView recyclerView, final SkillsFragment.ClickListener clickListener) {
-            this.clickListener = clickListener;
-            gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-                @Override
-                public boolean onSingleTapUp(MotionEvent e) {
-                    return true;
-                }
-
-                @Override
-                public void onLongPress(MotionEvent e) {
-                    View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
-                    if (child != null && clickListener != null) {
-                        clickListener.onLongClick(child, recyclerView.getChildPosition(child));
-                    }
-                }
-            });
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            View child = rv.findChildViewUnder(e.getX(), e.getY());
-            if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
-                clickListener.onClick(child, rv.getChildPosition(child));
-            }
-            return false;
-        }
-
-        @Override
-        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        }
-
-        @Override
-        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-        }
-    }
 
 
     public class HttpAsyncTasks extends AsyncTask<String, Void, String> {
@@ -327,23 +203,13 @@ public class SkillsFragment extends Fragment {
             viewAlertDialog();
         }
         if (id == R.id.done_add_skill) {
-            startToCreateTeam();
+           // startToCreateTeam();
 
         }
         return super.onOptionsItemSelected(item);
     }
 
 
-    void startToCreateTeam() {
-
-        if (skillsIds.isEmpty()) {
-            MyToast.toast(getContext(), "Please Choose a Skill !");
-
-        } else {
-            new HttpAsyncTask().execute(Utilites.URL_AddSkill);
-        }
-
-    }
 
 
     public void viewAlertDialog() {
@@ -363,16 +229,16 @@ public class SkillsFragment extends Fragment {
 
 
         final Spinner categorySpinner = (Spinner) promptsView.findViewById(R.id.catspinner);
-        final Spinner skillSpinner = (Spinner) promptsView.findViewById(R.id.skillspinner);
+
 
         ArrayAdapter<String> adp = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, categoryName);
-        final ArrayAdapter<String> adp2 = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, skillName);
+
 
         adp.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adp2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
 
         categorySpinner.setAdapter(adp);
-        skillSpinner.setAdapter(adp2);
+
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -387,7 +253,7 @@ public class SkillsFragment extends Fragment {
                         }
                     }
 
-                    adp2.notifyDataSetChanged();
+
 
 
                 }
@@ -405,12 +271,8 @@ public class SkillsFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String categoryName = (String) categorySpinner.getSelectedItem();
-                String skillName = (String) skillSpinner.getSelectedItem();
-                int id = GetSkillID(skillName);
-                skillsIds.add(id);
-                MyToast.toast(getContext(), categoryName + " : CATEGORY - " + skillName + "SKILL = ID :" + id);
 
-                prepareSkillData(categoryName, skillName);
+
 
             }
         });
@@ -430,20 +292,6 @@ public class SkillsFragment extends Fragment {
     }
 
 
-    int GetSkillID(String skillname) {
-        int skillID = 0;
-
-        for (CategorySkills categorySkills : categorySkillsArrayList) {
-            for (SkillInCategory skillInCategory : categorySkills.getSkills()) {
-                if (skillInCategory.getName().equals(skillname)) {
-                    skillID = skillInCategory.getId();
-                }
-            }
-
-        }
-
-        return skillID;
-    }
 
 
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
@@ -464,22 +312,18 @@ public class SkillsFragment extends Fragment {
 
             String result = null;
 
-            JSONArray jsonArray = new JSONArray();
+
+            JSONObject jsonObject = new JSONObject();
             try {
-                for (Integer id : skillsIds) {
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("id", id);
-                    jsonArray.put(jsonObject);
-                }
+                jsonObject.put("userId",myUser.getId());
+                jsonObject.put("categoryId","1");
+                jsonObject.put("skillName","ADEL");
 
-                JSONObject userLists = new JSONObject();
-                userLists.put("userId", myUser.getId());
-                userLists.put("skill", jsonArray);
-                result = WebServiceHandler.handler(urls[0], userLists);
-
+                result = WebServiceHandler.handler(urls[0], jsonObject);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
 
             return result;
 
@@ -496,6 +340,53 @@ public class SkillsFragment extends Fragment {
 
         }
     }
+
+//
+//    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+//        ProgressDialog progressDialog;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            progressDialog = new ProgressDialog(getActivity());
+//            progressDialog.setIndeterminate(true);
+//            progressDialog.setMessage("Save Data ...");
+//            progressDialog.show();
+//        }
+//
+//        @Override
+//        protected String doInBackground(String... urls) {
+//
+//
+//            String result = null;
+//
+//
+//            JSONObject jsonObject = new JSONObject();
+//            try {
+//                jsonObject.put("userId",myUser.getId());
+//
+//
+//                result = WebServiceHandler.handler(urls[0], jsonObject);
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//
+//
+//            return result;
+//
+//        }
+//
+//
+//        // onPostExecute displays the results of the AsyncTask.
+//        @Override
+//        protected void onPostExecute(String result) {
+//
+//            MyToast.toast(getActivity().getApplicationContext(), result + " ");
+//
+//            progressDialog.cancel();
+//
+//        }
+//    }
 
 
 

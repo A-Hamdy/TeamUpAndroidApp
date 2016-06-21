@@ -3,6 +3,8 @@ package android.hmkcode.com.myapplication123.MyTeams;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.hmkcode.com.myapplication123.Classes.CategorySkills;
 import android.hmkcode.com.myapplication123.Classes.SkillInCategory;
@@ -20,6 +22,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.util.TypedValue;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
@@ -122,10 +125,9 @@ public class MyTeams extends Fragment {
     }
 
 
-    private void prepareTeams(boolean owner,String teamId ,String teamName, String teamMembersNum) {
-        int[] covers = new int[]{R.drawable.albumme};
+    private void prepareTeams(boolean owner,String teamId ,String teamName, String teamMembersNum, byte[] image) {
 
-        TeamGrid a = new TeamGrid(teamId ,teamName, teamMembersNum, covers[0], owner);
+        TeamGrid a = new TeamGrid(teamId ,teamName, teamMembersNum, image, owner);
         teamList.add(a);
 
     }
@@ -213,10 +215,18 @@ public class MyTeams extends Fragment {
 
                     String teamName = team.getString("title");
                     String teamId = team.getString("id");
+
+
+                    String image = team.getString("image");
+                    byte[] myimg = Base64.decode(image, Base64.DEFAULT);
+
+
                     JSONArray membersArrays = team.getJSONArray("userHasTeams");
                     String teamMemberNum = membersArrays.length() + "";
                     boolean owner = true;
-                    prepareTeams(owner,teamId, teamName, teamMemberNum);
+
+
+                    prepareTeams(owner,teamId, teamName, teamMemberNum, myimg);
 
                 }
 
@@ -270,10 +280,15 @@ public class MyTeams extends Fragment {
 
                     String teamName = team.getString("title");
                     String teamId = team.getString("id");
+
+                    String image = team.getString("image");
+                    byte[] myimg = Base64.decode(image, Base64.DEFAULT);
+
+
                     JSONArray membersArrays = team.getJSONArray("userHasTeams");
                     String teamMemberNum = membersArrays.length() + "";
                     boolean owner = false;
-                    prepareTeams(owner,teamId, teamName, teamMemberNum);
+                    prepareTeams(owner,teamId, teamName, teamMemberNum,myimg);
                 }
 
             } catch (JSONException e) {

@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -101,9 +102,18 @@ public class AddTeamSkills extends Fragment {
         super.onActivityCreated(savedInstanceState);
 
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_skill);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Team Skills");
 
 
         ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+
+            @Override
+            public int getSwipeDirs(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+//                TextView tv1 = (TextView) viewHolder.itemView.findViewById(R.id.category);
+//                if(tv1.getText().toString().equalsIgnoreCase("it"))
+//                    return 0;
+                return super.getSwipeDirs(recyclerView, viewHolder);
+            }
 
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
@@ -130,7 +140,6 @@ public class AddTeamSkills extends Fragment {
                 }
             }
 
-
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int swipeDir) {
                 //Remove swiped item from list and notify the RecyclerView
@@ -139,15 +148,13 @@ public class AddTeamSkills extends Fragment {
                 TextView textView = (TextView) view.findViewById(R.id.skill);
                 skillsIds.remove(Integer.valueOf(GetSkillID(textView.getText().toString())));
 
-                MyToast.snackbar(getView(),"Skill (" + textView.getText().toString() + ") Deleted !");
+                MyToast.snackbar(getView(),"Skill (" + textView.getText().toString() + ") Deleted !",true);
 
                 mAdapter.notifyDataSetChanged();
             }
         };
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
-
 
         new HttpAsyncTasks().execute(Utilites.URL_GetAllCategories);
 
@@ -456,7 +463,8 @@ public class AddTeamSkills extends Fragment {
         ProgressDialog progressDialog;
 
         @Override
-        protected void onPreExecute() {
+        protected void onPreExecute()
+        {
             super.onPreExecute();
             progressDialog = new ProgressDialog(getActivity());
             progressDialog.setIndeterminate(true);

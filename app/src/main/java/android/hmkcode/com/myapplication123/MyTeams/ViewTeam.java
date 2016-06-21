@@ -36,7 +36,7 @@ public class ViewTeam extends Fragment {
     String team_id;
 
     public ViewTeam() {
-        // Required empty public constructor
+
     }
 
 

@@ -2,16 +2,20 @@ package android.hmkcode.com.myapplication123.CreateTeam;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hmkcode.com.myapplication123.Classes.Team;
 import android.hmkcode.com.myapplication123.Classes.User;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,8 +25,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.hmkcode.com.myapplication123.R;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -39,6 +45,8 @@ public class CreateTeam extends Fragment {
     ImageView teamImage;
     Fragment fragment;
     String imgEncode;
+    private static int RESULT_LOAD_IMG = 1;
+    String imgDecodableString;
 
     public CreateTeam() {
 
@@ -70,6 +78,11 @@ public class CreateTeam extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+//        final Toolbar toolbar = (Toolbar) getView().findViewById(R.id.toolbar);
+//         toolbar.setTitle("Add Team Info");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Team Info");
+        //setSupportActionBar(toolbar);
+
         name = (EditText) getView().findViewById(R.id.createTeamName);
         description = (EditText) getView().findViewById(R.id.createTeamDescription);
         bio = (EditText) getView().findViewById(R.id.createTeamBio);
@@ -79,14 +92,15 @@ public class CreateTeam extends Fragment {
         teamImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getCamera();
+                //getCamera();
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMG);
             }
         });
 
-
         photoDefault = BitmapFactory.decodeResource(getResources(),R.drawable.albumme);
         photoDefaultBytes = encodeToBase64(photoDefault, Bitmap.CompressFormat.PNG,100);
-
 
     }
 
@@ -94,7 +108,6 @@ public class CreateTeam extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -110,16 +123,57 @@ public class CreateTeam extends Fragment {
         // CAMERA_REQUEST = 1888 we use request code cause onActivityResult may be used from different intents.
     }
 
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        if (requestCode == 1888 && resultCode == getActivity().RESULT_OK) {
+//            photo = (Bitmap) data.getExtras().get("data");
+//            teamImage.setImageBitmap(photo);
+//
+//            imgEncode = encodeToBase64(photo, Bitmap.CompressFormat.PNG, 100);
+//
+//
+//        }
+//    }
+
+
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1888 && resultCode == getActivity().RESULT_OK) {
-            photo = (Bitmap) data.getExtras().get("data");
-            teamImage.setImageBitmap(photo);
+        super.onActivityResult(requestCode, resultCode, data);
+        try {
+            // When an Image is picked
+            if (requestCode == RESULT_LOAD_IMG && resultCode == getActivity().RESULT_OK
+                    && null != data) {
+                // Get the Image from data
 
-            imgEncode = encodeToBase64(photo, Bitmap.CompressFormat.PNG, 100);
+                Uri selectedImage = data.getData();
+                String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
+                // Get the cursor
+                Cursor cursor =getActivity(). getContentResolver().query(selectedImage,
+                        filePathColumn, null, null, null);
+                // Move to first row
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+                imgDecodableString = cursor.getString(columnIndex);
+                cursor.close();
+                ImageView imgView = (ImageView) getView().findViewById(R.id.team_image);
+                // Set the Image in ImageView after decoding the String
+                imgView.setImageBitmap(BitmapFactory
+                        .decodeFile(imgDecodableString));
 
+                photo = BitmapFactory.decodeFile(imgDecodableString);
+                imgEncode = encodeToBase64(photo, Bitmap.CompressFormat.PNG, 100);
+
+            } else {
+                Toast.makeText(getContext(), "You haven't picked Image",
+                        Toast.LENGTH_LONG).show();
+            }
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG)
+                    .show();
         }
+
     }
+
 
     public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
         ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
@@ -167,6 +221,10 @@ public class CreateTeam extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+
 
         fragment = new AddTeamSkills();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

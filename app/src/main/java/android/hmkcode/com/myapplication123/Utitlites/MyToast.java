@@ -17,7 +17,6 @@ public class MyToast {
         Toast.makeText(context,msg,Toast.LENGTH_LONG).show();
     }
 
-
     public static void snackbar(View view, String msg){
         Snackbar.make(view,msg,Snackbar.LENGTH_SHORT).show();
     }
@@ -25,6 +24,7 @@ public class MyToast {
     public static void snackbar(View view, String msg, boolean longer){
          Snackbar.make(view,msg,Snackbar.LENGTH_LONG).show();
     }
+
 
 
 }

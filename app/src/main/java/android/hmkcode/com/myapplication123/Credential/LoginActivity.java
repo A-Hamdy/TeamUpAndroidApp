@@ -25,6 +25,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -51,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     GoogleCloudMessaging gcm;
     String regId;
-
+    TextView register;
     EditText pssword;
     ImageView img;
     User myUser;
@@ -61,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
-
 
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -76,15 +76,20 @@ public class LoginActivity extends AppCompatActivity {
         pssword = (EditText) findViewById(R.id.input_password);
         // img = (ImageView) findViewById(R.id.testImgView);
 
-
+        register = (TextView) findViewById(R.id.register_link);
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent toRegisterIntent = new Intent(getApplicationContext(), Register.class);
+                startActivity(toRegisterIntent);
+                finish();
+            }
+        });
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (validate()) {
                     new HttpAsyncTask().execute(Utilites.URL_Login);
-//                    new HttpAsyncTask().execute(Utilites.URL_CreateTeam);
-//                    new HttpAsyncTask().execute(Utilites.URL_GetSuggestedUsers);
-
                 } else {
                     Toast.makeText(getApplicationContext(), "Wrong Credentials !!", Toast.LENGTH_SHORT).show();
                 }
@@ -179,7 +184,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
             try {
-               // Toast.makeText(getApplicationContext(),result + " ",Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(),result + " ",Toast.LENGTH_LONG).show();
                 JSONObject resultObject = new JSONObject(result);
                 Integer id = resultObject.getInt("id");
                 MyToast.toast(getApplicationContext(), id + " : Your ID From Login :D");
@@ -187,18 +192,10 @@ public class LoginActivity extends AppCompatActivity {
                 if (id != null) {
 
 
-                    myUser.userSaveData(getApplicationContext(),result);
-
-// Read Stuff
+                    myUser.userSaveData(getApplicationContext(), result);
                     myUser = myUser.userGetData(getApplicationContext());
 
-//                    String data = myUser.getProfilePictureBase64();
-//                    byte[] myimg = Base64.decode(data,Base64.DEFAULT);
-//                    Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
-//
-//                    myUser.imageSaveToInternal(getApplicationContext(),decodedByte,"userImage");
-
-                    // Read Stuff
+                    sendToken();
                     Intent toIntent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(toIntent);
                     finish();
@@ -209,14 +206,11 @@ public class LoginActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            sendToken();
+
             progressDialog.cancel();
 
         }
     }
-
-
-
 
 
     @Override
@@ -258,7 +252,7 @@ public class LoginActivity extends AppCompatActivity {
 //    }
 
 
-    public void sendToken(){
+    public void sendToken() {
         regId = registerGCM();
     }
 
@@ -303,7 +297,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void SendToServer(){
+    public void SendToServer() {
 
         new SendTokenToServer().execute(Utilites.URL_Notification_URL);
     }
@@ -329,7 +323,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("userId", myUser.getId());
-                jsonObject.put("token",  regId);
+                jsonObject.put("token", regId);
                 result = WebServiceHandler.handler(urls[0], jsonObject);
 
             } catch (JSONException e) {
@@ -343,7 +337,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            MyToast.toast(getApplicationContext(),"sent Token");
+            MyToast.toast(getApplicationContext(), "sent Token");
 //            progressDialog.dismiss();
 
 

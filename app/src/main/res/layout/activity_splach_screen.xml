@@ -3,7 +3,7 @@
     android:orientation="vertical" android:layout_width="fill_parent"
 
     android:layout_height="fill_parent"
-    android:background="@drawable/splachy"
+    android:background="@drawable/screen_splach"
     android:id="@+id/linear"
      >
 
@@ -14,7 +14,6 @@
         android:id="@+id/imageView"
         android:src="@drawable/logo"
         android:layout_gravity="center"
-
         android:layout_marginTop="97dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />

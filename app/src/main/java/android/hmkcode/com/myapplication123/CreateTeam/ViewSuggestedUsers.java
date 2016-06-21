@@ -21,6 +21,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -81,13 +82,7 @@ public class ViewSuggestedUsers extends Fragment {
                              Bundle savedInstanceState) {
         getActivity().invalidateOptionsMenu();
         setHasOptionsMenu(true);
-
-
-
         View v = inflater.inflate(R.layout.fragment_viewsuggested_users, container, false);
-
-
-
         return inflater.inflate(R.layout.fragment_viewsuggested_users, container, false);
     }
 
@@ -95,7 +90,9 @@ public class ViewSuggestedUsers extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Add Team Members");
         recyclerView = (RecyclerView) getView().findViewById(R.id.recycler_view_user);
+
 
         new HttpAsyncTask().execute(Utilites.URL_GetSuggestedUsers);
 
@@ -308,7 +305,7 @@ public class ViewSuggestedUsers extends Fragment {
 
 
 
- //invite
+
     private class HttpAsyncTask2 extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
@@ -337,7 +334,6 @@ public class ViewSuggestedUsers extends Fragment {
                     jsonObject.put("id",id);
                     jsonArray.put(jsonObject);
                 }
-
 
 
                 JSONObject userLists = new JSONObject();

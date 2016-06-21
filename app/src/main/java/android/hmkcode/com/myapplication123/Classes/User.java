@@ -20,10 +20,6 @@ import android.hmkcode.com.myapplication123.Utitlites.Utilites;
  */
 public class User {
 
-
-
-
-
     private String id;
     private String name;
     private String email;

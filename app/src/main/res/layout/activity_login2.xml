@@ -5,19 +5,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/back"
+
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ToolbarColoredBackArrow"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        android:elevation="4dp" />
-<ScrollView
+    <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,7 +25,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:id="@+id/imageView3"
-            android:src="@drawable/logo_dark"
+            android:src="@drawable/logo"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="20dp"/>
 
@@ -53,6 +47,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
 
                 android:textColor="@color/material_drawer_dark_background"
                 android:hint="Email" />
@@ -65,36 +61,50 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+
             android:layout_marginBottom="8dp">
+
             <EditText android:id="@+id/input_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:textColor="@color/material_drawer_dark_background"
-                android:hint="Password"/>
+                android:hint="Password" />
         </android.support.design.widget.TextInputLayout>
 
 
 
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:layout_marginBottom="24dp"
-             android:gravity="center"
-            android:textColor="#ffffff"
-            android:background="@color/colorPrimary"
-            android:text="Login"/>
 
-        <!--<TextView android:id="@+id/link_signup"-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textColor="@color/material_drawer_dark_background"-->
-            <!--android:layout_marginBottom="24dp"-->
-            <!--android:text="No account yet? Create one"-->
-            <!--android:gravity="center"-->
-            <!--android:textSize="16dip"/>-->
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:text="LOGIN"
+            android:textColor="#FFFFFF"
+            android:textSize="17dp"
+            android:layout_marginTop="40dp"
+
+            android:background="@drawable/button_bg_rounded_corners"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Register Now?"
+            android:layout_marginTop="10dp"
+            android:textColor="#212121"
+            android:clickable="true"
+android:id="@+id/register_link"
+
+
+            android:layout_gravity="center_horizontal" />
+
 
     </LinearLayout>
     </ScrollView>

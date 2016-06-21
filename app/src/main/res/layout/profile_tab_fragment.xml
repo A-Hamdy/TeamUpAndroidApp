@@ -28,7 +28,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:src="@drawable/balloon"
+                android:src="@drawable/defaultimg"
                 android:scaleType="fitXY"
                 android:contentDescription="Main Image"
                 android:padding="1dp"/>

@@ -10,19 +10,30 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="match_parent"-->
         <!--android:text="Create Team Page" />-->
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@drawable/screen_splach"
+    android:id="@+id/viewteambackground"
+    android:orientation="vertical">
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:id="@+id/team_image"
             android:src="@drawable/defaultimg"
-             android:scaleType="fitXY"
-            android:layout_alignParentTop="true" />
+            android:scaleType="fitXY"
+            android:layout_marginTop="32dp"
+            android:contentDescription="Main Image"
+            android:layout_gravity="center_horizontal" />
+</LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,7 +42,7 @@
             android:text="Team Name"
             android:id="@+id/textView3"
             android:layout_marginTop="27dp"
-            android:layout_below="@+id/team_image"
+            android:layout_below="@+id/viewteambackground"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -113,5 +124,5 @@
             android:layout_alignParentStart="true" />
 
     </RelativeLayout>
-
+</ScrollView>
 </FrameLayout>

@@ -1,21 +1,29 @@
 package android.hmkcode.com.myapplication123.Profile;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.hmkcode.com.myapplication123.MainActivity.MainActivity;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.R;
+import android.hmkcode.com.myapplication123.Utitlites.Utilites;
+import android.hmkcode.com.myapplication123.WebServiceHandler.WebServiceHandler;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -28,6 +36,12 @@ import android.widget.Toast;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.gson.Gson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
 
 
 public class ProfileFragment extends Fragment {
@@ -38,9 +52,9 @@ public class ProfileFragment extends Fragment {
             et_phone,
             et_bio;
 
-
-    ImageView image1,
-            image2, image3, image4, image5, image6;
+    Bitmap photo;
+    String imgEncode;
+    ImageView image1, image2, image3, image4, image5, image6, profile_image;
     //final Context context = this;
     private static int RESULT_LOAD_IMG = 1;
     String imgDecodableString;
@@ -83,15 +97,14 @@ public class ProfileFragment extends Fragment {
         et_phone = (TextView) getView().findViewById(R.id.F1Phone);
         et_bio = (TextView) getView().findViewById(R.id.F1Bio);
         et_linkedIn = (TextView) getView().findViewById(R.id.F1Linked);
+        profile_image = (ImageView) getView().findViewById(R.id.F1profileImage);
 
         image1 = (ImageView) getView().findViewById(R.id.imageView);
-
         image2 = (ImageView) getView().findViewById(R.id.imageView2);
         image3 = (ImageView) getView().findViewById(R.id.imageView3);
         image4 = (ImageView) getView().findViewById(R.id.imageview4);
         image5 = (ImageView) getView().findViewById(R.id.imageview5);
         image6 = (ImageView) getView().findViewById(R.id.imageview6);
-
 
         MyToast.toast(getActivity().getApplicationContext(), user.getName() + " :::");
         et_name.setText(user.getName());
@@ -99,13 +112,7 @@ public class ProfileFragment extends Fragment {
         et_phone.setText(user.getPhone());
         et_bio.setText(user.getBio());
         et_linkedIn.setText(user.getLinkedIn());
-//        image1.setImageBitmap(decodedByte);
-//        image2.setImageBitmap(decodedByte);
-//        image3.setImageBitmap(decodedByte);
-//        image4.setImageBitmap(decodedByte);
-//        image5.setImageBitmap(decodedByte);
-//        image6.setImageBitmap(decodedByte);
-
+        profile_image.setImageBitmap(decodedByte);
 
         image1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,8 +126,6 @@ public class ProfileFragment extends Fragment {
 
 
         });
-
-
 //
         image2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +136,7 @@ public class ProfileFragment extends Fragment {
 
                 // Set an EditText view to get user input
                 final EditText input = new EditText(getContext());
+
                 alert.setView(input);
 
                 alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
@@ -138,6 +144,7 @@ public class ProfileFragment extends Fragment {
                         //You will get as string input data in this variable.
                         // here we convert the input to a string and show in a toast.
                         String srt = input.getEditableText().toString();
+                        user.setName(srt);
                         et_name.setText(srt);
                         //   Toast.makeText(context,srt,Toast.LENGTH_LONG).show();
                     } // End of onClick(DialogInterface dialog, int whichButton)
@@ -173,6 +180,7 @@ public class ProfileFragment extends Fragment {
                         //You will get as string input data in this variable.
                         // here we convert the input to a string and show in a toast.
                         String srt = input.getEditableText().toString();
+                        user.setEmail(srt);
                         et_email.setText(srt);
                         //  Toast.makeText(context,srt,Toast.LENGTH_LONG).show();
                     } // End of onClick(DialogInterface dialog, int whichButton)
@@ -207,6 +215,7 @@ public class ProfileFragment extends Fragment {
                         //You will get as string input data in this variable.
                         // here we convert the input to a string and show in a toast.
                         String srt = input.getEditableText().toString();
+                        user.setLinkedIn(srt);
                         et_linkedIn.setText(srt);
                         // Toast.makeText(context,srt,Toast.LENGTH_LONG).show();
                     } // End of onClick(DialogInterface dialog, int whichButton)
@@ -241,6 +250,7 @@ public class ProfileFragment extends Fragment {
                         //You will get as string input data in this variable.
                         // here we convert the input to a string and show in a toast.
                         String srt = input.getEditableText().toString();
+                        user.setPhone(srt);
                         et_phone.setText(srt);
                         //   Toast.makeText(context,srt,Toast.LENGTH_LONG).show();
                     } // End of onClick(DialogInterface dialog, int whichButton)
@@ -263,7 +273,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-                alert.setTitle("Enter Your Name Here"); //Set Alert dialog title here
+                alert.setTitle("Enter Your Bio Here"); //Set Alert dialog title here
                 // alert.setMessage("Enter Your Name Here"); //Message here
 
                 // Set an EditText view to get user input
@@ -275,6 +285,7 @@ public class ProfileFragment extends Fragment {
                         //You will get as string input data in this variable.
                         // here we convert the input to a string and show in a toast.
                         String srt = input.getEditableText().toString();
+                        user.setBio(srt);
                         et_bio.setText(srt);
                         //   Toast.makeText(context,srt,Toast.LENGTH_LONG).show();
                     } // End of onClick(DialogInterface dialog, int whichButton)
@@ -340,7 +351,7 @@ public class ProfileFragment extends Fragment {
 
 
     @Override
-   public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         try {
             // When an Image is picked
@@ -352,7 +363,7 @@ public class ProfileFragment extends Fragment {
                 String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
                 // Get the cursor
-                Cursor cursor =getActivity(). getContentResolver().query(selectedImage,
+                Cursor cursor = getActivity().getContentResolver().query(selectedImage,
                         filePathColumn, null, null, null);
                 // Move to first row
                 cursor.moveToFirst();
@@ -361,20 +372,106 @@ public class ProfileFragment extends Fragment {
                 imgDecodableString = cursor.getString(columnIndex);
                 cursor.close();
                 ImageView imgView = (ImageView) getView().findViewById(R.id.F1profileImage);
-                // Set the Image in ImageView after decoding the String
-                imgView.setImageBitmap(BitmapFactory
-                        .decodeFile(imgDecodableString));
+                photo = BitmapFactory.decodeFile(imgDecodableString);
+                imgView.setImageBitmap(photo);
+                imgEncode = encodeToBase64(photo, Bitmap.CompressFormat.PNG, 100);
+
+                user.setProfilePictureBase64(imgEncode);
 
             } else {
                 Toast.makeText(getContext(), "You haven't picked Image",
                         Toast.LENGTH_LONG).show();
             }
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG)
-                    .show();
+            Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
         }
 
     }
+
+
+    public static String encodeToBase64(Bitmap image, Bitmap.CompressFormat compressFormat, int quality) {
+        ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();
+        image.compress(compressFormat, quality, byteArrayOS);
+        return Base64.encodeToString(byteArrayOS.toByteArray(), Base64.DEFAULT);
+    }
+
+
+    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getContext());
+            progressDialog.setIndeterminate(true);
+            progressDialog.setMessage("Updating Data ...");
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            String result = null;
+
+            // return POST(urls[0], myUser);
+            try {
+
+                JSONObject jsonObject = new JSONObject();
+
+                jsonObject.put("id", user.getId());
+                jsonObject.put("name", user.getName());
+                jsonObject.put("email", user.getEmail());
+                jsonObject.put("password", user.getPassword());
+                jsonObject.put("phone", user.getPhone());
+                jsonObject.put("bio", user.getBio());
+                jsonObject.put("linkedIn", user.getLinkedIn());
+                jsonObject.put("image", user.getProfilePictureBase64());
+
+//
+//                    Gson jsonBuilder = new Gson();
+//                    JSONObject jsonObject = new JSONObject(jsonBuilder.toJson(myUser));
+                result = WebServiceHandler.handler(urls[0], jsonObject);
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            progressDialog.cancel();
+            MyToast.toast(getContext(),result,1);
+            user.userSaveData(getContext(),result);
+
+            ((MainActivity)getActivity()).updateProfile(user);
+
+
+        }
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        menu.clear();
+        inflater.inflate(R.menu.menu_team_add, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+        if (id == R.id.done_team_info) {
+            new HttpAsyncTask().execute(Utilites.URL_EditProfile);
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
 }
 
 
@@ -382,21 +479,5 @@ public class ProfileFragment extends Fragment {
 
 
 
-
-//
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        MenuItem shareMenuItem = menu.findItem(R.id.action_share);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        switch (item.getItemId()){
-//            case android.R.id.home:
-//                return true;
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
 

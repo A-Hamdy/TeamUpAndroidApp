@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.hmkcode.com.myapplication123.AddNewSkill.AddNewSkillFragment;
 import android.hmkcode.com.myapplication123.CreateTeam.CreateTeam;
 import android.hmkcode.com.myapplication123.Credential.LoginActivity;
 import android.hmkcode.com.myapplication123.MyTeams.MyTeams;
+import android.hmkcode.com.myapplication123.Notification.Notifications;
 import android.hmkcode.com.myapplication123.R;
 import android.hmkcode.com.myapplication123.SessionManager.SessionManager;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     String regId;
     Fragment fragment;
     FragmentManager fragmentManager;
+    IProfile profile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,27 +85,19 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
         fragment = new MyTeams();
-        //Fragment fragment = new Fragment();
-        transaction.add(R.id.mainFragment,fragment);
+         transaction.add(R.id.mainFragment, fragment);
         transaction.commit();
         myuser = new User();
-//        ActionBar a = getSupportActionBar();
-//        a.show();
 
         myuser = myuser.userGetData(getApplicationContext());
         String data = myuser.getProfilePictureBase64();
+
         byte[] myimg = Base64.decode(data, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(myimg, 0, myimg.length);
 
-       //sendToken();
+        //sendToken();
 
-       // new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
-        // Bitmap bmap = myuser.imageGetFromInternal(getApplicationContext(),"userImage");
-
-        // Create a few sample profile
-        // NOTE you have to define the loader logic too. See the CustomApplication for more details
-        final IProfile profile = new ProfileDrawerItem().withName(myuser.getName()).withEmail(myuser.getEmail()).withIcon(decodedByte);
-//        final IProfile profile2 = new ProfileDrawerItem().withName("Bernat Borras").withEmail("alorma@github.com").withIcon(Uri.parse("https://avatars3.githubusercontent.com/u/887462?v=3&s=460"));
+         profile = new ProfileDrawerItem().withName(myuser.getName()).withEmail(myuser.getEmail()).withIcon(decodedByte);
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -126,13 +121,12 @@ public class MainActivity extends AppCompatActivity {
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_second).withIcon(FontAwesome.Icon.faw_group).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_first).withIcon(FontAwesome.Icon.faw_user_plus).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_notify).withIcon(FontAwesome.Icon.faw_bell).withIdentifier(3).withBadge("10").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_notify).withIcon(FontAwesome.Icon.faw_bell).withIdentifier(3),//.withBadge("10").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_third).withIcon(FontAwesome.Icon.faw_user).withIdentifier(4),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_comments).withIdentifier(5).withBadge("2").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_comments).withIdentifier(5),//.withBadge("2").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_fifth).withIcon(FontAwesome.Icon.faw_send).withIdentifier(6),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_sixth).withIcon(FontAwesome.Icon.faw_mail_reply).withIdentifier(7)
-//                        new DividerDrawerItem(), // to add divider
-                ) // add the items we want to use with our Drawer
+                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
@@ -156,19 +150,37 @@ public class MainActivity extends AppCompatActivity {
                             result.getDrawerLayout().closeDrawer(GravityCompat.START);
 
 
+                        } else if (drawerItem.getIdentifier() == 3) {
+
+
+                            fragment = new Notifications();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            toolbar.setTitle("Notifications");
+                            transaction.replace(R.id.mainFragment, fragment);
+                            transaction.commit();
+                            result.getDrawerLayout().closeDrawer(GravityCompat.START);
+
+
+                        } else if (drawerItem.getIdentifier() == 6) {
+
+
+                            fragment = new AddNewSkillFragment();
+                            FragmentTransaction transaction = fragmentManager.beginTransaction();
+                            toolbar.setTitle("New");
+                            transaction.replace(R.id.mainFragment, fragment);
+                            transaction.commit();
+                            result.getDrawerLayout().closeDrawer(GravityCompat.START);
+
+
                         } else if (drawerItem.getIdentifier() == 7) {
 
-                            session.setSession(false);
                             Intent toIntent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(toIntent);
                             finish();
+                            //new Logout().execute(Utilites.URL_Logout);
 
                         } else if (drawerItem.getIdentifier() == 4) {
 
-//                            session.setSession(false);
-//                            Intent toIntent = new Intent(getApplicationContext(), MyProfile.class);
-//                            startActivity(toIntent);
-//                            finish();
                             fragment = new MyProfile();
                             toolbar.setTitle("Profile");
                             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -185,16 +197,13 @@ public class MainActivity extends AppCompatActivity {
                         return false;
                     }
                 })
-                .withSavedInstance(savedInstanceState)
+                //.withSavedInstance(savedInstanceState)
                 .withShowDrawerOnFirstLaunch(true)
                 .build();
 
-        //get out our drawerLayout
-        crossfadeDrawerLayout = (CrossfadeDrawerLayout) result.getDrawerLayout();
-        //define maxDrawerWidth
-        crossfadeDrawerLayout.setMaxWidthPx(DrawerUIUtils.getOptimalDrawerWidth(this));
-        //add second view (which is the miniDrawer)
-        MiniDrawer miniResult = result.getMiniDrawer();
+         crossfadeDrawerLayout = (CrossfadeDrawerLayout) result.getDrawerLayout();
+         crossfadeDrawerLayout.setMaxWidthPx(DrawerUIUtils.getOptimalDrawerWidth(this));
+         MiniDrawer miniResult = result.getMiniDrawer();
         //build the view for the MiniDrawer
         View view = miniResult.build(this);
         //set the background of the MiniDrawer as this would be transparent
@@ -275,9 +284,8 @@ public class MainActivity extends AppCompatActivity {
 //    }
 
 
-
     /*Notification GCM*/
-    public void sendToken(){
+    public void sendToken() {
         regId = registerGCM();
     }
 
@@ -322,7 +330,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void SendToServer(){
+    public void SendToServer() {
 
         new SendTokenToServer().execute(Utilites.URL_Notification_URL);
     }
@@ -349,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("userId", myuser.getId());
-                jsonObject.put("token",  regId);
+                jsonObject.put("token", regId);
                 result = WebServiceHandler.handler(urls[0], jsonObject);
 
             } catch (JSONException e) {
@@ -363,7 +371,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            MyToast.toast(getApplicationContext(),"server data :" + result);
+            MyToast.toast(getApplicationContext(), "server data :" + result);
             progressDialog.dismiss();
 
 
@@ -371,8 +379,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
-
 
 
     private class HttpAsyncTask2 extends AsyncTask<String, Void, String> {
@@ -433,5 +439,60 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    private class Logout extends AsyncTask<String, Void, String> {
+
+//        ProgressDialog progressDialog2;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+//            progressDialog2 = new ProgressDialog(getApplicationContext());
+//            progressDialog2.setIndeterminate(true);
+//            progressDialog2.setMessage("Logout ...");
+//            progressDialog2.show();
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            String result = null;
+
+
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("userId", myuser.getId());
+
+
+                result = WebServiceHandler.handler(urls[0], jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+            return result;
+
+        }
+
+
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+
+//            progressDialog2.cancel();
+            session.setSession(false);
+
+
+        }
+    }
+
+
+    public void updateProfile(User user)
+    {
+        //profile = new ProfileDrawerItem().withName(myuser.getName()).withEmail(myuser.getEmail()).withIcon(decodedByte);
+        profile.withName(user.getName());
+        profile.withEmail(user.getEmail());
+        profile.withIcon(BitmapFactory.decodeFile(user.getProfilePictureBase64()));
+    }
 }
 

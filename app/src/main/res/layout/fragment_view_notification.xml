@@ -1,0 +1,133 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/createTeam"
+    android:background="@color/md_white_1000"
+    tools:context=".Notification.ViewNotification">
+
+
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <!--<ImageView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="300dp"-->
+            <!--android:id="@+id/team_image"-->
+            <!--android:src="@drawable/defaultimg"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:contentDescription="Main Image"-->
+            <!--android:padding="1dp"-->
+            <!--/>-->
+
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:text="Team Name"-->
+            <!--android:id="@+id/textView3"-->
+            <!--android:layout_marginTop="27dp"-->
+            <!--android:layout_below="@+id/team_image"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:text="Description"-->
+            <!--android:id="@+id/textView4"-->
+            <!--android:layout_marginTop="28dp"-->
+            <!--android:layout_below="@+id/createTeamName"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:text="Bio"-->
+            <!--android:id="@+id/textView5"-->
+            <!--android:layout_marginTop="25dp"-->
+            <!--android:layout_below="@+id/createTeamDescription"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
+            <!--android:text="Duration"-->
+            <!--android:id="@+id/textView6"-->
+            <!--android:layout_marginTop="26dp"-->
+            <!--android:layout_below="@+id/createTeamBio"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true" />-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textPersonName"-->
+            <!--android:ems="10"-->
+            <!--android:hint="Enter Team Name"-->
+            <!--android:id="@+id/createTeamName"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_below="@+id/textView3"-->
+            <!--android:layout_alignParentLeft="true" />-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textPersonName"-->
+            <!--android:ems="10"-->
+            <!--android:hint="Enter Team Description"-->
+            <!--android:id="@+id/createTeamDescription"-->
+            <!--android:layout_below="@+id/textView4"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true" />-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="textPersonName"-->
+            <!--android:ems="10"-->
+            <!--android:hint="Enter Team Bio"-->
+            <!--android:id="@+id/createTeamBio"-->
+            <!--android:layout_below="@+id/textView5"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true" />-->
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="number"-->
+            <!--android:ems="10"-->
+            <!--android:hint="Enter Team Duration"-->
+            <!--android:id="@+id/createTeamDuration"-->
+            <!--android:layout_below="@+id/textView6"-->
+            <!--android:layout_alignParentLeft="true"-->
+            <!--android:layout_alignParentStart="true" />-->
+
+    </RelativeLayout>
+</ScrollView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="reject"
+        android:id="@+id/reject"
+        android:layout_gravity="left|center_vertical" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="accept"
+        android:id="@+id/accept"
+        android:layout_gravity="right|center_vertical" />
+</FrameLayout>

@@ -1,5 +1,7 @@
 package android.hmkcode.com.myapplication123.MyTeams.TeamGrid;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Lincoln on 18/05/16.
  */
@@ -7,14 +9,14 @@ public class TeamGrid {
     private String name;
     private String teamId;
     private String numOfMembers;
-    private int thumbnail;
+    private byte[] thumbnail;
     private boolean owner;
 
 
     public TeamGrid() {
     }
 
-    public TeamGrid(String teamId ,String name, String numOfMembers, int thumbnail, boolean owner) {
+    public TeamGrid(String teamId , String name, String numOfMembers, byte[] thumbnail, boolean owner) {
         this.name = name;
         this.numOfMembers = numOfMembers;
         this.thumbnail = thumbnail;
@@ -54,11 +56,11 @@ public class TeamGrid {
         this.numOfMembers = numOfMembers;
     }
 
-    public int getThumbnail() {
+    public byte[] getThumbnail() {
         return thumbnail;
     }
 
-    public void setThumbnail(int thumbnail) {
+    public void setThumbnail(byte[] thumbnail) {
         this.thumbnail = thumbnail;
     }
 }

@@ -11,9 +11,9 @@ public class Utilites {
     static String PORT = "40663";
 //    static String PORT = "49583";
 //    static String IP = "localhost";
-//    static String IP = "168.254.154.163";
+//    static String IP = "10.118.49.61";
 //    static String IP = "10.144.3.172";
-//    static String IP = "192.168.1.11";
+//    static String IP = "192.168.43.21";
 //    static String IP = "10.118.49.177";
 //    static String IP = "10.140.200.120";
     static String IP = "10.118.48.221";
@@ -34,7 +34,11 @@ public class Utilites {
     public static String URL_GetMyTeamsAsOwner = URL + "getMyTeamAsOwner";
     public static String URL_GetMyTeamsAsMember= URL + "getMyTeamAsMember";
     public static String URL_GetTeamById       = URL + "getTeamById";
-
+    public static String URL_AcceptInvitation  = URL + "operationOnInvitation";
+    public static String URL_ConfirmInvitation = URL + "confirm";
+    public static String URL_AddSkill          = URL + "addSkill";
+    public static String URL_AddNewSkill       = URL + "addNewSkill";
+    public static String URL_Logout            = URL + "logOut";
 
 
 
