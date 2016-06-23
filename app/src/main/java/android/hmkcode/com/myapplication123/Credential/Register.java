@@ -63,7 +63,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     Bitmap defaultPhoto;
     TextView loginback;
 
-    String name, email, password, confirmPassword, linkedin, bio;
+
 
 
     @Override
@@ -123,18 +123,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-//    void getCamera() {
-//        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(cameraIntent, 1888);
-//        // CAMERA_REQUEST = 1888 we use request code cause onActivityResult may be used from different intents.
-//    }
-//
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == 1888 && resultCode == RESULT_OK) {
-//            photo = (Bitmap) data.getExtras().get("data");
-//            image.setImageBitmap(photo);
-//        }
-//    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -255,13 +244,18 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             myUser.setLinkedIn(linkedin);
             myUser.setPhone(phone);
             if (imgEncode == null) {
-                photoDefault = BitmapFactory.decodeResource(getResources(),R.drawable.defaultimg);
+
+                final BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 8;
+
+                photoDefault = BitmapFactory.decodeResource(getResources(),R.drawable.defaultimg,options);
                 photoDefaultBytes = encodeToBase64(photoDefault, Bitmap.CompressFormat.JPEG,10);
                 myUser.setProfilePictureBase64(photoDefaultBytes);
+                photoDefault.recycle();
+                photoDefault = null;
             }
             else
                 myUser.setProfilePictureBase64(imgEncode);
-
 
         }
 
@@ -317,9 +311,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                     jsonObject.put("linkedIn", myUser.getLinkedIn());
                     jsonObject.put("image", myUser.getProfilePictureBase64());
 
-//
-//                    Gson jsonBuilder = new Gson();
-//                    JSONObject jsonObject = new JSONObject(jsonBuilder.toJson(myUser));
+
                     result = WebServiceHandler.handler(urls[0], jsonObject);
 
 
@@ -334,8 +326,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         @Override
         protected void onPostExecute(String result) {
             try {
-//                JSONObject resultObject = new JSONObject(result);
-//                Integer id = resultObject.getInt("id");
+
 
                 Gson jsonBuilder = new Gson();
                 User userData = jsonBuilder.fromJson(result,User.class);
@@ -343,7 +334,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                 JSONObject resultObject = new JSONObject(result);
                 id = resultObject.getInt("id");
 
-                MyToast.toast(getApplicationContext(), userData.getEmail() + " : Your ID :D " + id);
+
+
 
                 if (id != null) {
 
@@ -475,7 +467,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         @Override
         protected void onPostExecute(String result) {
 
-            MyToast.toast(getApplicationContext(), "sent Token");
+
+
             Intent toIntent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(toIntent);
             finish();

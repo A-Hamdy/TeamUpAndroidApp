@@ -51,7 +51,6 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder> 
         holder.userImage.setImageResource(R.drawable.user_willbeadded);
 
 
-
     }
 
     @Override

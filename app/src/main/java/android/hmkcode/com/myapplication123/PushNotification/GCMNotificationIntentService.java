@@ -95,10 +95,13 @@ public class GCMNotificationIntentService extends IntentService {
                 msgDetails = "You have invited to join a Team";
             else if (notifyMessage.equalsIgnoreCase("accept"))
                 msgDetails = "You have accepted to join Team " + teamName;
+            else if (notifyMessage.equalsIgnoreCase("reject"))
+                msgDetails = "Member rejected to join your Team";
             else if (notifyMessage.equalsIgnoreCase("confirm"))
-                msgDetails = "Your request has confirmed to join Team " + teamName;
+                msgDetails = "Your have confirmed to join Team " + teamName;
             else if (notifyMessage.equalsIgnoreCase("Owner reject"))
                 msgDetails = "Owner rejected you to join Team " + teamName;
+
 
 
             Notification notification = new Notification(notifyMessage, msgDetails, teamId, targetUserId, teamName);
@@ -185,8 +188,7 @@ public class GCMNotificationIntentService extends IntentService {
                 .setContentText(notifyMessage + " you to join his team")
                 .setSound(sound);
 
-        MyToast.toast(getApplicationContext(), msg);
-
+        mBuilder.setAutoCancel(true);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());

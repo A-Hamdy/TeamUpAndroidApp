@@ -284,7 +284,6 @@ public class AddTeamSkills extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-//            MyToast.toast(getContext(),result + "  ");
 
             try {
                 JSONArray jsonArray = new JSONArray(result);
@@ -391,7 +390,7 @@ public class AddTeamSkills extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String name = (String) parent.getItemAtPosition(position);
-                MyToast.toast(getContext(), name + " : name");
+
                 skillName.clear();
                 for (CategorySkills categorySkills : categorySkillsArrayList) {
                     if (categorySkills.getName().equals(name)) {
@@ -421,7 +420,8 @@ public class AddTeamSkills extends Fragment {
                 String skillName = (String) skillSpinner.getSelectedItem();
                 int id = GetSkillID(skillName);
                 skillsIds.add(id);
-                MyToast.toast(getContext(), categoryName + " : CATEGORY - " + skillName + "SKILL = ID :" + id);
+
+
 
                 prepareSkillData(categoryName, skillName);
 
@@ -497,8 +497,7 @@ public class AddTeamSkills extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            MyToast.toast(getActivity().getApplicationContext(), result + " ");
-            try {
+             try {
                 JSONObject teamid = new JSONObject(result);
                 String  id = teamid.getString("id");
                 team.setId(id);

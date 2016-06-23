@@ -123,7 +123,7 @@ public class ViewSuggestedUsers extends Fragment {
                 }
 
 
-                MyToast.toast(getContext(), usersIds + " : IDS");
+
 
 
 
@@ -238,10 +238,6 @@ public class ViewSuggestedUsers extends Fragment {
     }
 
 
-
-
-
-
     private class HttpAsyncTask extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
 
@@ -281,23 +277,27 @@ public class ViewSuggestedUsers extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            //MyToast.toast(getActivity().getApplicationContext(), result + " ");
+
 
             Gson jsonBuilder = new Gson();
             Type myList = new TypeToken<ArrayList<User>>(){}.getType();
             myUsers = new ArrayList<>();
             myUsers = jsonBuilder.fromJson(result,myList);
 
-            for (User user : myUsers) {
-                prepareUserData(user.getId(),user.getName(), user.getEmail());
-            }
+            if (myUsers == null)
+            {
+                MyToast.snackbar(getView(),"No Members Compatible with This SKILL",true);
+            }else {
 
+                for (User user : myUsers) {
+                    prepareUserData(user.getId(), user.getName(), user.getEmail());
+                }
+            }
             mAdapter.notifyDataSetChanged();
 
 //            new HttpAsyncTask2().execute(Utilites.URL_InviteUsers);
             progressDialog.cancel();
 //            progressDialog.dismiss();
-
 
 
         }
@@ -356,7 +356,7 @@ public class ViewSuggestedUsers extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-            MyToast.toast(getContext(),"sent Notification");
+
             progressDialog.cancel();
 
             fragment = new MyTeams();

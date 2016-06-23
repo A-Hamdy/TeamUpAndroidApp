@@ -103,36 +103,6 @@ public class Notification {
 
 
 
-    public static void notificationsSaveData(Context context, String json)
-    {
-        SharedPreferences.Editor editor = context.getSharedPreferences("NotificationsList", context.MODE_PRIVATE).edit();
-        editor.putString("NotificationsJSON", json);
-        editor.commit();
-    }
-
-    public static String notificationsGetArrayData(Context context)
-    {
-        SharedPreferences prefs = context.getSharedPreferences("NotificationsList", context.MODE_PRIVATE);
-        String myJsonText = prefs.getString("NotificationsJSON", null);
-        return myJsonText;
-
-    }
-
-
-
-    public static Notification notificationsGetData(Context context)
-    {
-        SharedPreferences prefs = context.getSharedPreferences("NotificationsList", context.MODE_PRIVATE);
-        String myJsonText = prefs.getString("NotificationsJSON", null);
-        Notification notificationData = null;
-        if (myJsonText != null) {
-            Gson jsonBuilder = new Gson();
-            notificationData = new Notification();
-            notificationData = jsonBuilder.fromJson(myJsonText, Notification.class);
-        }
-        return notificationData;
-    }
-
 
 
 

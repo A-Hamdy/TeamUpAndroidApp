@@ -9,6 +9,7 @@ import android.hmkcode.com.myapplication123.CreateTeam.DividerItemDecoration;
 import android.hmkcode.com.myapplication123.CreateTeam.UserAdapter;
 import android.hmkcode.com.myapplication123.DB.SqlLiteDataBaseHelper;
 import android.hmkcode.com.myapplication123.MyTeams.MyTeams;
+import android.hmkcode.com.myapplication123.MyTeams.ViewTeam;
 import android.hmkcode.com.myapplication123.R;
 import android.hmkcode.com.myapplication123.Utitlites.MyToast;
 import android.hmkcode.com.myapplication123.Utitlites.Utilites;
@@ -92,11 +93,13 @@ public class Notifications extends Fragment {
             public void onClick(View view, int position) {
                 Notification notification = notificationsList.get(position);
 
-                if (notification.getType().equalsIgnoreCase("invite")) {
-                    fragment = new ViewNotification();
 
+
+                if (notification.getType().equalsIgnoreCase("invite")) {
+                    fragment = new ViewNotificationTeam();
                     Bundle bundle = new Bundle();
                     bundle.putString("teamId", notification.getTeamID());
+                    bundle.putString("notificationID", notification.getId());
                     fragment.setArguments(bundle);
 
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -105,11 +108,12 @@ public class Notifications extends Fragment {
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
                 } else if (notification.getType().equalsIgnoreCase("accept")) {
-                    fragment = new ViewNotificationConfirm();
+                    fragment = new ViewNotificationTeamConfirm();
 
                     Bundle bundle = new Bundle();
                     bundle.putString("teamId", notification.getTeamID());
                     bundle.putString("targetId", notification.getTargetUserId());
+                    bundle.putString("notificationID", notification.getId());
                     fragment.setArguments(bundle);
 
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -117,9 +121,19 @@ public class Notifications extends Fragment {
                     fragmentTransaction.replace(R.id.view_notifications, fragment);
                     fragmentTransaction.addToBackStack(null);
                     fragmentTransaction.commit();
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("TEAMID", notification.getTeamID());
+
+                    fragment = new ViewNotificationTeamOnly();
+                    fragment.setArguments(bundle);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.view_notifications, fragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
                 }
-                Toast.makeText(getContext(), notification.getType() + " is selected!" + notification.getId(), Toast.LENGTH_SHORT).show();
-            }
+             }
 
             @Override
             public void onLongClick(View view, int position) {
@@ -153,61 +167,13 @@ public class Notifications extends Fragment {
     private void prepareNotifications() {
 
 
-//        Notification notificationview = new Notification();
-//        Notification notification2 = null;
-//
-//        notification2 = Notification.notificationsGetData(getContext());
-//        Log.i("HamdyJSON", myArray);
 
 
-
-//            JSONArray myJSONArray = new JSONArray(myArray);
-//            Log.i("HamdyJSON", myJSONArray.toString());
-//            MyToast.toast(getContext(),myJSONArray + " ", 3);
-//            for (int i = 0; i < myJSONArray.length(); i++){
-//                JSONObject jsonObject = myJSONArray.getJSONObject(i);
-//                String type = jsonObject.getString("type");
-//                notification2.setType(type);
-//                if (type.equalsIgnoreCase("accept"))
-//                {
-//                    String teamName = jsonObject.getString("teamName");
-//                    notification2.setTeamName(teamName);
-//                    String targetUserId =  jsonObject.getString("targetUserId");
-//                    notification2.setTargetUserId(targetUserId);
-//                }
-//                String teamID = jsonObject.getString("teamID");
-//                notification2.setTeamID(teamID);
-//                String msg = jsonObject.getString("msg");
-//                notification2.setMsg(msg);
-//
-//            }
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        notificationsList.add(notification2);
-//        mAdapter.notifyDataSetChanged();
-
-
-//        Notification notificationview = new Notification();
-//        Notification notification2;
-//        //notificationview = Notification.notificationsGetData(getContext());
-//
-//        if (notificationview.getType().equalsIgnoreCase("accept"))
-//             notification2 = new Notification(notificationview.getId(), notificationview.getType(), notificationview.getMsg(),notificationview.getTeamID(),notificationview.getTargetUserId(),notificationview.getTeamName());
-//        else
-//             notification2 = new Notification(notificationview.getId(), notificationview.getType(), notificationview.getMsg(),notificationview.getTeamID());
-//
-//        notificationsList.add(notification2);
-//
 
         SqlLiteDataBaseHelper helper = new SqlLiteDataBaseHelper(getContext());
         notifications = new ArrayList<>();
         notifications = helper.getAllNotifications();
-        for (Notification notification : notifications)
-        {
+        for (Notification notification : notifications) {
             notificationsList.add(notification);
         }
 

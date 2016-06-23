@@ -28,7 +28,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:src="@drawable/defaultimg"
+                android:src="@drawable/balloon"
                 android:scaleType="fitXY"
                 android:contentDescription="Main Image"
                 android:padding="1dp"/>
@@ -69,12 +69,14 @@
                 android:id="@+id/F1Name"
 
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:background="@drawable/textview_border"
                 android:hint="Enter your name..."
                 android:paddingBottom="8dp"
                 android:paddingLeft="6dp"
                 android:textSize="18sp"
+
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
                 android:layout_alignParentTop="true" />
 
@@ -92,7 +94,19 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true" />
 
-
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="Edit image icon"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/account_card_details"
+                android:paddingTop="60dp"
+                android:id="@+id/image"
+                android:layout_alignTop="@+id/imageView2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
 
 
@@ -111,9 +125,10 @@
                 android:id="@+id/F1Email"
 
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:background="@drawable/textview_border"
                 android:hint="Enter your Email..."
+                android:layout_marginLeft="40dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="6dp"
@@ -122,20 +137,18 @@
                 android:layout_alignParentTop="true" />
 
             <ImageView
-                android:id="@+id/imageView3"
-
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:contentDescription="Edit image icon"
                 android:clickable="true"
                 android:padding="4dp"
                 android:scaleType="fitXY"
-                android:background="@drawable/ic_action_edit"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-
+                android:background="@drawable/ic_email_black_24dp"
+                android:paddingTop="60dp"
+                android:id="@+id/image1"
+                android:layout_alignBottom="@+id/F1Email"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
 
         </RelativeLayout>
@@ -150,13 +163,14 @@
                 android:id="@+id/F1Linked"
 
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:background="@drawable/textview_border"
-                android:hint="Enter your LinkedUrl..."
+                android:hint="Enter your Password..."
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="6dp"
                 android:textSize="18sp"
+                android:layout_marginLeft="40dp"
                 android:gravity="center_vertical"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -177,7 +191,19 @@
                 android:layout_alignParentEnd="true" />
 
 
-
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:contentDescription="Edit image icon"
+                    android:clickable="true"
+                    android:padding="4dp"
+                    android:scaleType="fitXY"
+                    android:background="@drawable/ic_lock_black_24dp"
+                    android:paddingTop="60dp"
+                    android:id="@+id/image2"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignBottom="@+id/F1Linked" />
 
 
 
@@ -193,11 +219,11 @@
 
             <TextView
                 android:id="@+id/F1Phone"
-
+                android:layout_marginLeft="40dp"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:background="@drawable/textview_border"
-                android:hint="Enter your LinkedUrl..."
+                android:hint="Enter your phone..."
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="6dp"
@@ -223,7 +249,19 @@
                 android:layout_alignParentEnd="true" />
 
 
-
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="Edit image icon"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_phone_black_24dp"
+                android:paddingTop="60dp"
+                android:id="@+id/image3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                />
 
 
 
@@ -242,16 +280,16 @@
                 android:id="@+id/F1Bio"
 
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="80dp"
                 android:background="@drawable/textview_border"
                 android:hint="Bio..."
                 android:paddingTop="6dp"
                 android:paddingBottom="8dp"
                 android:paddingLeft="6dp"
+                android:layout_marginLeft="40dp"
                 android:textSize="18sp"
                 android:gravity="center_vertical"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true" />
+                android:layout_alignParentTop="true" />
 
             <ImageView
                 android:id="@+id/imageview6"
@@ -268,7 +306,19 @@
                 android:layout_alignParentEnd="true" />
 
 
-
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="Edit image icon"
+                android:clickable="true"
+                android:padding="4dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/ic_mode_comment_black_24dp"
+                android:paddingTop="60dp"
+                android:id="@+id/image4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                />
 
         </RelativeLayout>
     </LinearLayout>

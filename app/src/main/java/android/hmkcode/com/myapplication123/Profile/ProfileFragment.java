@@ -54,7 +54,7 @@ public class ProfileFragment extends Fragment {
 
     Bitmap photo;
     String imgEncode;
-    ImageView image1, image2, image3, image4, image5, image6, profile_image;
+    ImageView image1, image2,  image4, image5, image6, profile_image;
     //final Context context = this;
     private static int RESULT_LOAD_IMG = 1;
     String imgDecodableString;
@@ -101,12 +101,11 @@ public class ProfileFragment extends Fragment {
 
         image1 = (ImageView) getView().findViewById(R.id.imageView);
         image2 = (ImageView) getView().findViewById(R.id.imageView2);
-        image3 = (ImageView) getView().findViewById(R.id.imageView3);
         image4 = (ImageView) getView().findViewById(R.id.imageview4);
         image5 = (ImageView) getView().findViewById(R.id.imageview5);
         image6 = (ImageView) getView().findViewById(R.id.imageview6);
 
-        MyToast.toast(getActivity().getApplicationContext(), user.getName() + " :::");
+
         et_name.setText(user.getName());
         et_email.setText(user.getEmail());
         et_phone.setText(user.getPhone());
@@ -163,49 +162,12 @@ public class ProfileFragment extends Fragment {
 
         });
 
-
-        image3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-                alert.setTitle("Enter Your Email Here"); //Set Alert dialog title here
-                //    alert.setMessage("Enter Your Name Here"); //Message here
-
-                // Set an EditText view to get user input
-                final EditText input = new EditText(getContext());
-                alert.setView(input);
-
-                alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        //You will get as string input data in this variable.
-                        // here we convert the input to a string and show in a toast.
-                        String srt = input.getEditableText().toString();
-                        user.setEmail(srt);
-                        et_email.setText(srt);
-                        //  Toast.makeText(context,srt,Toast.LENGTH_LONG).show();
-                    } // End of onClick(DialogInterface dialog, int whichButton)
-                }); //End of alert.setPositiveButton
-                alert.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        // Canceled.
-                        dialog.cancel();
-                    }
-                }); //End of alert.setNegativeButton
-                AlertDialog alertDialog = alert.create();
-                alertDialog.show();
-       /* Alert Dialog Code End*/
-            }// End of onClick(View v)
-
-
-        });
-
         image4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
                 alert.setTitle("Enter Your LinkedUrl Here"); //Set Alert dialog title here
                 // alert.setMessage("Enter Your Name Here"); //Message here
-
                 // Set an EditText view to get user input
                 final EditText input = new EditText(getContext());
                 alert.setView(input);
@@ -443,7 +405,8 @@ public class ProfileFragment extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             progressDialog.cancel();
-            MyToast.toast(getContext(),result,1);
+
+
             user.userSaveData(getContext(),result);
 
             ((MainActivity)getActivity()).updateProfile(user);

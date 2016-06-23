@@ -47,7 +47,7 @@ public class ViewTeam extends Fragment {
 
         Bundle bundle = getArguments();
         team_id = bundle.getString("TEAMID");
-        MyToast.toast(getContext(),team_id + " TEAM id VIEW TEAM");
+
 
         new HttpAsyncTasks().execute(Utilites.URL_GetTeamById);
 

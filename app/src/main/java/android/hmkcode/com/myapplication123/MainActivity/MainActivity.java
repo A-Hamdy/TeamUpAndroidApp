@@ -9,6 +9,7 @@ import android.hmkcode.com.myapplication123.AddNewSkill.AddNewSkillFragment;
 import android.hmkcode.com.myapplication123.CreateTeam.CreateTeam;
 import android.hmkcode.com.myapplication123.Credential.LoginActivity;
 import android.hmkcode.com.myapplication123.MyTeams.MyTeams;
+import android.hmkcode.com.myapplication123.MyTeams.NoTeams;
 import android.hmkcode.com.myapplication123.Notification.Notifications;
 import android.hmkcode.com.myapplication123.R;
 import android.hmkcode.com.myapplication123.SessionManager.SessionManager;
@@ -84,12 +85,14 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
+
         fragment = new MyTeams();
-         transaction.add(R.id.mainFragment, fragment);
+        transaction.add(R.id.mainFragment, fragment);
         transaction.commit();
         myuser = new User();
 
         myuser = myuser.userGetData(getApplicationContext());
+
         String data = myuser.getProfilePictureBase64();
 
         byte[] myimg = Base64.decode(data, Base64.DEFAULT);
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                         new PrimaryDrawerItem().withName(R.string.drawer_item_first).withIcon(FontAwesome.Icon.faw_user_plus).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_notify).withIcon(FontAwesome.Icon.faw_bell).withIdentifier(3),//.withBadge("10").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_third).withIcon(FontAwesome.Icon.faw_user).withIdentifier(4),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_comments).withIdentifier(5),//.withBadge("2").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),
+                        //new PrimaryDrawerItem().withName(R.string.drawer_item_fourth).withIcon(FontAwesome.Icon.faw_comments).withIdentifier(5),//.withBadge("2").withBadgeStyle(new BadgeStyle(R.drawable.shap, Color.RED, Color.RED, Color.WHITE)),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_fifth).withIcon(FontAwesome.Icon.faw_send).withIdentifier(6),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_sixth).withIcon(FontAwesome.Icon.faw_mail_reply).withIdentifier(7)
                  )
@@ -141,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
 
                         } else if (drawerItem.getIdentifier() == 2) {
 
-
                             fragment = new CreateTeam();
                             FragmentTransaction transaction = fragmentManager.beginTransaction();
                             toolbar.setTitle("Create Team");
@@ -151,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                         } else if (drawerItem.getIdentifier() == 3) {
-
 
                             fragment = new Notifications();
                             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -174,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
                         } else if (drawerItem.getIdentifier() == 7) {
 
+                            session.setSession(false);
                             Intent toIntent = new Intent(getApplicationContext(), LoginActivity.class);
                             startActivity(toIntent);
                             finish();
@@ -371,7 +373,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            MyToast.toast(getApplicationContext(), "server data :" + result);
+
+
             progressDialog.dismiss();
 
 
@@ -432,7 +435,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            //MyToast.toast(getActivity().getApplicationContext(), result + " ");
+
             progressDialog.cancel();
 
         }

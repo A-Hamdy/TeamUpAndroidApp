@@ -54,6 +54,8 @@ public class MyTeams extends Fragment {
     User user;
     Fragment fragment;
     ProgressDialog progressDialog;
+    boolean found = true;
+    boolean found2 = true;
 
 
     public MyTeams() {
@@ -68,13 +70,19 @@ public class MyTeams extends Fragment {
         user = new User();
         user = user.userGetData(getContext());
 
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.team_fragment, container, false);
+        View view;
+
+        view = inflater.inflate(R.layout.team_fragment, container, false);
+
+
+        return view;
     }
 
     @Override
@@ -95,10 +103,10 @@ public class MyTeams extends Fragment {
                 ImageView imageView = (ImageView) view.findViewById(R.id.thumbnail);
                 TextView textView = (TextView) view.findViewById(R.id.teamId);
                 String team_id = textView.getText().toString();
-                MyToast.toast(getContext(),"TEAM ID : " + team_id);
+
 
                 Bundle bundle = new Bundle();
-                bundle.putString("TEAMID",team_id);
+                bundle.putString("TEAMID", team_id);
 
                 fragment = new ViewTeam();
                 fragment.setArguments(bundle);
@@ -107,7 +115,6 @@ public class MyTeams extends Fragment {
                 fragmentTransaction.replace(R.id.myteampage, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
-
 
 
             }
@@ -125,9 +132,9 @@ public class MyTeams extends Fragment {
     }
 
 
-    private void prepareTeams(boolean owner,String teamId ,String teamName, String teamMembersNum, byte[] image) {
+    private void prepareTeams(boolean owner, String teamId, String teamName, String teamMembersNum, byte[] image) {
 
-        TeamGrid a = new TeamGrid(teamId ,teamName, teamMembersNum, image, owner);
+        TeamGrid a = new TeamGrid(teamId, teamName, teamMembersNum, image, owner);
         teamList.add(a);
 
     }
@@ -189,12 +196,10 @@ public class MyTeams extends Fragment {
         protected String doInBackground(String... urls) {
 
             JSONObject jsonObject = new JSONObject();
-            try
-            {
-                jsonObject.put("id",user.getId());
+            try {
+                jsonObject.put("id", user.getId());
 
-            } catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             String result = WebServiceHandler.handler(urls[0], jsonObject);
@@ -209,24 +214,35 @@ public class MyTeams extends Fragment {
 
             try {
                 JSONArray jsonArray = new JSONArray(result);
-                for (int i = 0; i < jsonArray.length(); i++) {
-
-                    JSONObject team = jsonArray.getJSONObject(i);
-
-                    String teamName = team.getString("title");
-                    String teamId = team.getString("id");
 
 
-                    String image = team.getString("image");
-                    byte[] myimg = Base64.decode(image, Base64.DEFAULT);
+                if (jsonArray.length() > 0) {
+
+                    for (int i = 0; i < jsonArray.length(); i++) {
+
+                        JSONObject team = jsonArray.getJSONObject(i);
+
+                        String teamName = team.getString("title");
+                        String teamId = team.getString("id");
 
 
-                    JSONArray membersArrays = team.getJSONArray("userHasTeams");
-                    String teamMemberNum = membersArrays.length() + "";
-                    boolean owner = true;
+                        String image = team.getString("image");
+                        byte[] myimg = Base64.decode(image, Base64.DEFAULT);
 
 
-                    prepareTeams(owner,teamId, teamName, teamMemberNum, myimg);
+                        JSONArray membersArrays = team.getJSONArray("userHasTeams");
+                        String teamMemberNum = membersArrays.length() + "";
+                        boolean owner = true;
+
+                        prepareTeams(owner, teamId, teamName, teamMemberNum, myimg);
+
+                    }
+
+
+                } else {
+                    found = false;
+                    checker();
+
 
                 }
 
@@ -254,12 +270,10 @@ public class MyTeams extends Fragment {
         protected String doInBackground(String... urls) {
 
             JSONObject jsonObject = new JSONObject();
-            try
-            {
-                jsonObject.put("id",user.getId());
+            try {
+                jsonObject.put("id", user.getId());
 
-            } catch (JSONException e)
-            {
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
             String result = WebServiceHandler.handler(urls[0], jsonObject);
@@ -271,24 +285,29 @@ public class MyTeams extends Fragment {
         @Override
         protected void onPostExecute(String result) {
 
-
             try {
                 JSONArray jsonArray = new JSONArray(result);
-                for (int i = 0; i < jsonArray.length(); i++) {
 
-                    JSONObject team = jsonArray.getJSONObject(i);
+                if (jsonArray.length() > 0) {
 
-                    String teamName = team.getString("title");
-                    String teamId = team.getString("id");
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
-                    String image = team.getString("image");
-                    byte[] myimg = Base64.decode(image, Base64.DEFAULT);
+                        JSONObject team = jsonArray.getJSONObject(i);
 
+                        String teamName = team.getString("title");
+                        String teamId = team.getString("id");
 
-                    JSONArray membersArrays = team.getJSONArray("userHasTeams");
-                    String teamMemberNum = membersArrays.length() + "";
-                    boolean owner = false;
-                    prepareTeams(owner,teamId, teamName, teamMemberNum,myimg);
+                        String image = team.getString("image");
+                        byte[] myimg = Base64.decode(image, Base64.DEFAULT);
+
+                        JSONArray membersArrays = team.getJSONArray("userHasTeams");
+                        String teamMemberNum = membersArrays.length() + "";
+                        boolean owner = false;
+                        prepareTeams(owner, teamId, teamName, teamMemberNum, myimg);
+                    }
+                }else {
+                    found2 = false;
+                    checker();
                 }
 
             } catch (JSONException e) {
@@ -298,6 +317,19 @@ public class MyTeams extends Fragment {
             adapter.notifyDataSetChanged();
             progressDialog.cancel();
 
+        }
+    }
+
+
+    void checker(){
+        if (found == false && found2 == false)
+        {
+            Fragment fragment = new NoTeams();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.myteampage, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         }
     }
 
@@ -317,6 +349,7 @@ public class MyTeams extends Fragment {
 
     public interface ClickListener {
         void onClick(View view, int position);
+
         void onLongClick(View view, int position);
     }
 
@@ -363,5 +396,6 @@ public class MyTeams extends Fragment {
 
         }
     }
+
 
 }

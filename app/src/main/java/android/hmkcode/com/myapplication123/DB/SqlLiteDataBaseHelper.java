@@ -23,10 +23,9 @@ public class SqlLiteDataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_teamID = "teamID";
     public static final String COLUMN_targetUserId = "targetUserId";
     public static final String COLUMN_teamName = "teamName";
-
-
+    public static final String COLUMN_readed = "readed";
     private static final String DATABASE_NAME = "DB.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 4;
 
     private static final String DATABASE_CREATE_Notification = "CREATE TABLE "
             + TABLE_Notification          + " ("
@@ -34,8 +33,9 @@ public class SqlLiteDataBaseHelper extends SQLiteOpenHelper {
             + COLUMN_msg      + " VARCHAR(255),"
             + COLUMN_type     + " VARCHAR(255),"
             + COLUMN_teamID   + " VARCHAR(255),"
-            + COLUMN_targetUserId    + " VARCHAR(255), "
-            + COLUMN_teamName + " VARCHAR(255));  ";
+            + COLUMN_targetUserId    + " VARCHAR(255),"
+            + COLUMN_teamName + " VARCHAR(255),"
+            + COLUMN_readed + " INTEGER);";
 
 
     public SqlLiteDataBaseHelper(Context context) {
@@ -74,6 +74,7 @@ public class SqlLiteDataBaseHelper extends SQLiteOpenHelper {
         contentValues.put(SqlLiteDataBaseHelper.COLUMN_teamID, notification.getTeamID());
         contentValues.put(SqlLiteDataBaseHelper.COLUMN_targetUserId, notification.getTargetUserId());
         contentValues.put(SqlLiteDataBaseHelper.COLUMN_teamName, notification.getTeamName());
+        contentValues.put(SqlLiteDataBaseHelper.COLUMN_readed, 0);
         long insertId = database.insert(SqlLiteDataBaseHelper.TABLE_Notification, null,
                 contentValues);
 
@@ -81,10 +82,17 @@ public class SqlLiteDataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void updateNotification(String id){
+        SQLiteDatabase database = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SqlLiteDataBaseHelper.COLUMN_readed, 1);
+        database.update(TABLE_Notification,contentValues,"id="+id,null);
+    }
+
     public List<Notification> getAllNotifications() {
         List<Notification> notifications = new ArrayList<Notification>();
         SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = database.rawQuery("select * from " + TABLE_Notification, null);
+        Cursor cursor = database.rawQuery("select * from " + TABLE_Notification + " where readed <> 1", null);
 
         while (cursor.moveToNext()) {
             Notification notification = cursorToUser(cursor);
@@ -98,6 +106,7 @@ public class SqlLiteDataBaseHelper extends SQLiteOpenHelper {
 
     private Notification cursorToUser(Cursor cursor) {
         Notification notification = new Notification();
+        notification.setId(cursor.getString(cursor.getColumnIndex("id")));
         notification.setMsg(cursor.getString(cursor.getColumnIndex("msg")));
         notification.setType(cursor.getString(cursor.getColumnIndex("type")));
         notification.setTeamID(cursor.getString(cursor.getColumnIndex("teamID")));

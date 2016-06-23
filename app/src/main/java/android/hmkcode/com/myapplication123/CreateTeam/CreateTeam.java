@@ -123,16 +123,7 @@ public class CreateTeam extends Fragment {
         // CAMERA_REQUEST = 1888 we use request code cause onActivityResult may be used from different intents.
     }
 
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        if (requestCode == 1888 && resultCode == getActivity().RESULT_OK) {
-//            photo = (Bitmap) data.getExtras().get("data");
-//            teamImage.setImageBitmap(photo);
-//
-//            imgEncode = encodeToBase64(photo, Bitmap.CompressFormat.PNG, 100);
-//
-//
-//        }
-//    }
+
 
 
     @Override

@@ -109,10 +109,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        return (cm.getActiveNetworkInfo() != null);
-    }
 
 
     public boolean validate() {
@@ -187,7 +183,8 @@ public class LoginActivity extends AppCompatActivity {
                 // Toast.makeText(getApplicationContext(),result + " ",Toast.LENGTH_LONG).show();
                 JSONObject resultObject = new JSONObject(result);
                 Integer id = resultObject.getInt("id");
-                MyToast.toast(getApplicationContext(), id + " : Your ID From Login :D");
+
+
 
                 if (id != null) {
 
@@ -337,7 +334,8 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            MyToast.toast(getApplicationContext(), "sent Token");
+
+
 //            progressDialog.dismiss();
 
 

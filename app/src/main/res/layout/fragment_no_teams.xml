@@ -1,0 +1,23 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/no_team_id"
+    tools:context="android.hmkcode.com.myapplication123.MyTeams.NoTeams">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gotocreateteam"
+        android:src="@drawable/gotocreateteam"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal|bottom" />
+
+    <ImageView
+        android:layout_width="295dp"
+        android:layout_height="210dp"
+        android:layout_marginBottom="50dp"
+        android:src="@drawable/noteams"
+        android:layout_gravity="center" />
+
+</FrameLayout>
